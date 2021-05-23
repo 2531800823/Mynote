@@ -1,0 +1,115 @@
+
+
+		头文件<windows.h>
+	int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrehinstance,LPSTR LpCmdLine,int nShowCmd)
+			参1：是 实例句柄 相当于id   								_In_
+			参2：是参1的id ，就是开两个相同窗口 用他来传递，现在已经无效了，名存实亡，因为向下兼容性 	_In_opt_
+			参3：是命令行参数  char* 的重命名							_In_
+			参4：显示方式  刚打开的是什么默认方式							_In_
+
+
+
+
+	sal:	就是_In_ 这种
+		1）_In_   		是给函数传参数对象是指针的时候 不可以传NULL 会崩溃 加上这个给你提示（只针对指针）
+		2）_In_opt_  	上面功能一样，上面是在函数调用的时候，这个是在函数使用的时候  传递指针的时候记得if(是否为空)
+		3）_Out_ 	传递进去了必须要用，否则函数头有绿色下滑线，也不可以传NULL 
+		4）_Out_opt_	可以穿NULL了 但是使用的时候就有绿色下划线了
+		5）_Inout_ 	有 _In_的属性 要使用初始化的指针，传递之前有合法值，不可以为NULL
+		6）_Inout_opt_ 	和上面一样，可以穿NULL
+		7）_Outptr_  	针对与二级指针，不可以直接传NULL， 二级指针传递穿进去，要使用
+		8）_Outptr_opt_	同上 多了可以穿NULL了
+
+
+	
+
+	1）创建主窗口 结构体（用来装属性的）	WNDCLASS WNDCLASSEX(新版) 包含着窗口的基本属性 加了EX 就都要加上后面注册创建
+		WNDCLASSEX wce；
+		a）wce.cbClsExtra=0   窗口类额外空间大小，不想用设置0
+			通过 GetClassLong 获取该空间的值，SetClassLong 设置该空间的值
+		b）wce.cbSize=sizeof(WNDCLASSEX);  是当前结构体的大小
+		c）wce.cbWndExtra=0  窗口类额外空间大小，不想用设置0
+			通过 GetClassLong 获取该空间的值，SetClassLong 设置该空间的值
+		d）wce.hbrBackground=(HBRUSH)COLOR_BTNFACE  背景颜色 去MSDN里面查结构体有很多颜色，记得强转使用
+		e）wce.hCursor = NULL 是鼠标样式 默认就是NULL，记载其他样式 用 LoadCurser函数，自己画的什么东西用Loadlmage
+		f）wce.hIcon= NULL 图标 就是记事本左上角的小本本  不用图标就是NULL
+		g）wce.hIconSn =NULL    也是图标  是下面桌面栏的 想用系统定义好的 还是Loadlcon函数	默认NULL自己画的什么东西用Loadlmage
+		h）wce.hinstance= WinMain 参1 就是 这个窗口属于那个应用程序
+		i）wce.lpfmWmdProc=  回调函数 就是创建好了写一个回调函数 然后这个回调函数 名字写在这里
+		j）wce.lpszClassName= L"liu"  类的名字，给当前的类起个名，多个窗口不可以重复，就像id,  
+			加上L就不用属性-》高级-》字符集改成多字节了，还用全球的，也可以用TEXT("liu")这个是自动识别，_T("liu") 就要家还是那个头文件了<TCHAR.h>功能跟TEXT一样
+		k）wce.lpszMenuName=NULL; 菜单名字  没有菜单就NULL，用就要加菜单句柄，LoadMenu函数
+		l）wce.style=CS_HREDRAW | CS_VREDRAW     风格   垂直刷新和 水平刷新
+
+	2）注册窗口结构体
+		ATOM RegisterClassEx(&wce);  把上面创建的主窗口传址进去  返回0失败 成功非0
+	
+	3）创建窗口
+		HWND linshi=CreateWindowExW(WS_EX_OVERLAPPEDWINDOW , TEXT("刘士朋"),TEXT("第一"), WS_OVERLAPPEDWINDOW,300,200,700,500,NULL,NULL, hInstance,NULL);
+			失败返回NULL  成功返回窗口句柄
+			参1：窗口额外风格 | 多个风格并存。有工具就要加工具栏，菜单就要菜单栏  MSDN 查吧
+			参2：类的名字 TEXT("liu");  或者结构体成员名字wce.lpszClassName
+			参3：窗口名字 也要用TEXT("mingzi")转一下
+			参4：窗口风格 | 多个风格并存  WS_OVERLAPPEDWINDOW这个吧一些基础的定义好了，最大化最小化啥的滚动条 MSDN 查吧
+			参5~参8：横坐标、纵坐标、宽度、高度 就是起始打开的位置 
+			参9：父窗口 打开的桌面是父窗口，在自己创建的上面在打开一个子窗口 ，自己创建的就是父窗口，先填NULL
+			参10：菜单  用就填 菜单句柄 不用就是NULL
+			参11：实例句柄  就是主函数参1  实例句柄
+			参12：自定义参数 跟回调函数有关系 不用填NULL  用的话就自己定义个呗
+		
+	4）显示窗口
+		ShowWindow(linshi,1)
+			参1：窗口句柄  想显示那个就传递那个的窗口句柄，就是上面3）创建的
+			参2：窗口的显示风格  0是隐藏显示 1正常显示 也可以填主函数最后一个参数 默认就是1 别的MSDN查吧
+		返回值：BOOL类型 创建非隐藏就是参2填的是多少返回多少   窗口隐藏的返回0
+
+	5）更新（刷新）窗口：
+		BOOL UpdateWindow(linshi) 进行了一点更新的时候用 有东西改变的时候刷新
+			参1：就是窗口句柄
+		返回值：更新那个窗口就返回那个
+
+	6）消息循环： Windows处理用户行为的代码逻辑，即算法 就叫做消息机制
+		a）得到消息： 放在while（中）当判断条件
+			BOOL GetMessage(&a，0，10,20)			
+				参1：要定义结构体 MSG 变量a 的
+				参2：窗口句柄，一个软件中每一个窗口都有一个窗口句柄，填谁就只接收谁的  填0都接收 
+				参3~参4：消息id的范围  想要全部 都处理 就填 都填0
+			返回值：窗口退出返回0（接收到wm_quit）  其他返回非0  还有错误返回-1（基本不会有错误） 所以可以放while放判断语句
+			
+		b）翻译消息：在循环中
+			TranslateMessage(&a);  将按键消息转换成字符消息（针对键盘的）
+				参1：就是上面的参1 ，是一个定义好的 MSG结构体 传址
+		c）分发消息：在翻译下面
+			DispatchMessage(&a); 将消息分到回调函数
+				参1：就是上面的参1 ，是一个定义好的 MSG结构体 传址
+			
+	6）回调函数： 是自己单独写的一个函数
+		LRESULT WINAPI 名字huidiao(
+			参1：窗口句柄 HWND linshi
+			参2：消息id    消息MSG结构体里面的 UINT id
+			参3：整形信息，消息MSG结构体里面的 WPARAM  wparam  socket传进来
+			参4：非整形信息 接收创建窗口最后一个参数 消息MSG结构体里面的 LPARAM lparam  socket的错误码
+		){  消息处理switch()  return  DefWindowProc(linshi，id，wparam，lparam);返回值这函数，参数是上面4个 }
+		switch处理：
+		 	switch(id){  
+				a）case WM_CLOSE:  break; 窗口点 X 以后就会调用它，在别的窗口new出来的空间给释放了  处理自己申请的空间
+
+				 b）case WM_DESTROY:  //销毁PostQuitMessage(0);  //产生 wm_quit 然后while循环判断就结束了 很多个窗口的时候就不用调用 
+					不加他 点 X 了还是还运行（调试没关闭）加上以后就关闭了，循环就结束了break;   系统释放窗口空间
+
+				c）case  WM_CREATE: //在窗口创建的时候执行的，就执行1次，一般来数据初始化
+					MessageBox(NULL, TEXT("准备好了吗"), TEXT("提示："), MB_OK); 提示信息 可以去MSDN查 break；先提示信息在窗口 可以实现阻塞哦
+
+设置控制台标题： SetConsoleTitle()              头文件<windows.h>
+
+
+
+
+
+
+
+
+
+
+
+

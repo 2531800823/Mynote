@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int Max(int n)
+{
+	if (n == 1) {
+		return 1;
+	}
+	else if (n == 2)
+	{
+		return 1;
+	}
+	else
+	{
+		return (Max(n - 1) + Max(n - 2));
+	}
+
+}
+
+int main(void)
+{
+	int  t;
+	t = Max(8);
+	printf("%d\n",t);
+
+	system("pause");
+	return 0;
+}

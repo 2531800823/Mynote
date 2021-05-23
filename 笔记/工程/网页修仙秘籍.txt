@@ -1,0 +1,505 @@
+	<!DOCTYPE html>  必须哟有的定义
+	<meta charset="UTF-8">   防止乱码
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">  自适应屏幕大小比例网页大小
+	<meta name="keywords" content="搜索引擎关键词">
+ 	<meta name="description" content="描述网页内容">
+	<meta name="author" content="定义网页的作者">
+ 	<meta http-equiv="refresh" content="0;D:\桌面\实例三.html"> 多少秒后跳转网页，也可以跳转自己，注意循环
+另开css	<link rel="stylesheet（链接文件）" href="文件路径">  把style的效果在 css效果文件可用这种实现，不同样式的可以多个，
+设置标题图片	<link rel="icon" rel="stylesheet" href="路径">  rel=“还有很多，网页搜吧”
+设置绝对路径	<base href="D:\桌面\">只要是在这个文件夹里<a href="都可以只名字加后缀就行">第一个</a>
+另开Java Script	<script src="jaxa.js相对路径">定义另开以后就不能在这里写字了</script> 在Java Script 中文字输出是另一种语言
+	<script src="jaxa.js" defer（如果另开的事替换p标签或..不用defer是不行的 除非这句在p标签或..下面）></script>
+当浏览器不支持Java Script时	<noscript> <p>在网页不支持javas的时候显示文字也可以定义图片</p> </noscript>
+注释	<!-- 在此处写文字  carl+/ -->
+css注释	 /*  在此写文字  和c语言一样*/
+JavaScript注释	//或/* */完全c语言的注释
+
+
+ul<li*5 直接打出来5个li标签
+
+
+ 语义化结构：去man.ilovefishc.com查看
+主页的介绍	<header>（介绍信息）</header>标签定义文档的页眉
+导航链接		<nav> 标签定义导航链接的部分</nav> 就像打字一样的排列，可在<a >标签后输入 | 或其他显示隔离
+定义主要内容		<main></main>在一个文档中，不能出现一个以上的 <main> 元素。素中的内容对于文档来说应当是唯一的。
+			它不应包含在文档中重复出现的内容，比如侧栏、导航栏、版权信息、站点标志或搜索表单。
+定义独立文章内容 	<article></article>标签的内容独立于文档的其余部分
+定义侧边栏	<aside></aside>签定义其所处内容之外的内容。aside 的内容应该与附近的内容相关
+定义文章中的节	<section>	</section>文档中的区段  标签定义文档中的节（section、区段）。（里面嵌套h1~6标题，和<p>标签）比如章节、页眉、页脚或文档中的其他部分。可以嵌套多个，他会分清层级关系的
+定义页脚部分内容	<footer>	</footer>文档中的页脚部分,元素应当含有其包含元素的信息。页脚通常包含文档的作者、版权信息、使用条款链接、联系信息等等。
+		您可以在一个文档中使用多个 <footer> 元素。<footer> 元素内的联系信息应该位于 <address> 标签中。
+定义额外的细节内容	<details></details>关于文档的细节   可以将内容都隐藏起来用<summary>当标签展开显示  <details open>默认展开</details>  IE浏览器不能用
+定义details元素的标题	<summary></summary>应该是 <details> 元素的第一个子元素。
+
+标题组合		<hgroup>里面包含了<h1><h2>~~标题 </hgroup>
+	<h1>~<h6>——<p>——普通标签
+
+加粗	<b>定义加粗</b>
+	<strong>重要语义</strong>
+倾斜	<i>定义倾斜</i>
+	<em>强调</em>
+特殊倾斜	<address>也是倾斜</address>标签定义文档或文章的作者/拥有者的联系信息,位于 <body> 元素内，则它表示文档联系信息,位于 <article> 元素内，则它表示文章的联系信息
+	素中的文本通常呈现为斜体。大多数浏览器会在 address 元素前后添加折行
+下划线	<u>定义下划线</u>
+	<ins>下划线</ins>
+删除线	<del>定义删除线</del>
+	<s>删除线</s>
+
+颜色标记 突出	<mark >标记默认黄色</mark>  可用class（类名）在另开css中或style中改变定义样式
+上标	<sup>定义上标（X的平方）</sup>
+下标	<sub>定义下标（下面的类似平方）</sub>
+变小	<small>变小字号</small>
+变大	<big>变大字号</big>
+首行缩进5个字符	<blockquote>首行缩进5个字符</blockquote>
+引用	<q></q>表示引用   例如：“说”    例如：<q>说</q>  简短的引用
+引用	 <blockquote> </blockquote> 可用于很多段落引用缩进
+保留源文件格式	<pre>保留源文件格式<pre> 可以嵌套
+语义化	<code>语义化</code>具体什么样式可在css定义 待完 善
+程序的变量	<var>定义程序的变量</var>  待完善
+用户的输入	<kbd>定义用户的输入<kbd> 待完善
+程序的输出	<samp>定义程序的输出</samp> 待完善
+扩展显示	<abbr title="鼠标放上显示的文字">网页显示</abbr>
+感觉是倾斜	<dfn>刘士朋</dfn>   html术语
+给字加拼音	<ruby>魑<rp>(</rp><rt>chī</rt><rp>)</rp></ruby>  ruby和rt rp搭配使用，<rt>在文字上方显示</rt><rp>如果不支持在上方显示的话用<rp>加（）在括号里显示
+文字方向		<bdo dir="ltr从左到右"></bdo> rtl从右到左
+进度条显示	<progress max="1" value="0.8到多少进度了"></progress>输入空的进度条他会来回动哦
+定义度量衡	<meter value="必需，指定当前值（可以百分比0.几）"form="" high="高的值的范围" low="低的值的范围"min="范围的最小值" max="范围的最大值"optimum="">这段不显示</meter>属性值都是数字	
+乱数假文		  <在想要的标签后面打上>  Lorem  然后按  TAB 键 
+文档中插图的图像	<figure> 可以在里面插入标签  文档，标签规定独立的流内容（图像、图表、照片、代码等等）
+		 <img src="路径" alt="" > 定义图片样式
+     		   <figcaption>文字</figcaption>  标签定义 figure 元素的标题（caption）
+	</figure>
+
+提示内容	title="内联样式，放上去会显示内容"，可用于段落
+
+<br>——换行
+<hr>——水平线    <hr   可在内联样式中定义样式>
+  &lt；——小于 
+  &gt；——大于 
+ &amp；——&  
+ &reg；——注册商标（小圈R）
+&nbsp；——空格  
+  &quot；——双引号
+   &copy；——版权（圈c）
+ &times；——乘号
+&divide；——除号
+
+	
+绝对单位：
+in英寸 （1in=2.54cm ） cm厘米  mm毫米  pt磅（1pt=1/72in）pica（皮卡）（pc，1pc=12pt）
+相对单位：
+em元素字体高度   ex表示所使用的字体中小写字母x的高度作为参考，实际浏览器将em的值/2  
+px屏幕像素点        %  这个还用解释吗？百分之
+
+字体嵌套标签	<font face="隶书"> 文字</font>
+字体大小	size=   “数字px“——设置水平高度
+宽度	width=“数字%、px"  ——             宽度——         “例如：width="300px" ”
+边框设置	border：设置边框属性，border：width：数字，设置边框宽度，style：设置样式 百度搜，color：颜色  inherit从父元素继承 border 属性的设置，下面又补充
+字体大小	 font-size：字体大小，绝对单位和相对单位上面有，还有一个特殊的关键词百度吧
+字体风格	font-style：字体风格  normal；标准样式，italic;斜体字体， oblique;倾斜字体
+大小写字体样式	font-variant：小型的大写字母字体    normal；默认正常   small-caps（小型的大写字母字体）
+字体类型样式	font-family：字体名  黑体... 可以使用多个字体如果前一个字体没有向后找一直找不到使用默认字体
+字体加粗	font-weight：字体粗细  normal；默认，bold；粗体，bolder；更粗，lighter；更细，100~900   400是默认，700是bold
+字体间距	letter-spacing：”数字 em||px（可以负数）”字体间距   
+字体行高高度	line-height：”数字”百分比行高   px||em
+首行缩进	text-indent：数字相对绝对单位  首行缩进  长度单位||%   
+下划线、删除线	text-decoration：none ；默认，underline；文本下一条线，overline；文本上一条线，line-through；删除线
+开头字母大小写	text-transform:none；默认，capitalize；每个单词大写字母开头，uppercase；仅有大写字母，lowercase；无大写只有小写
+背景颜色设置	background-color: 颜色;     英文，#0~f“6位十六进制”
+图片设置背景	 background-image: url(图片路径);   设置图片变背景，none默认不设置
+重复背景图像	background-repeat：repert背景图像完全填充元素大小的空间，repeat-x背景图像在水平方向从左向右填充元素大小的空间
+	：repeat-y只使用背景图像在垂直方向从上到下填充元素大小的空间，  no-repeat不使用背景图像重复填充元素，仅显示一次
+设置固定的背景图像	 background-attachment:fixed当页面的其余部分滚动时，背景图像不会移动，scroll默认值。背景页面一起滚动
+设置背景图像的起始位置	background-position：百分比||长度||关键词  具体百度
+   
+div：
+
+
+打印模式：<style media="print(只针对)">样式在这里h1{ color:black;}h2{color：black；}还有很多要打印的,具体详细的去搜索</style>
+不同条件改样式	<style media="screen（意思是浏览设备电脑） and (min-width: 00（意思最小不低于指定像素）)and(max-width: 000（不高于）这三个条件要同时存在在执行)">body{background-image: url("图片地址")（例如修改背景）;}
+	（意思是符合条件变成这个元素其他不变）</style>
+尺寸显示不同图片	<picture>  元素零或多个 <source> 元素和一个 <img> 元素，每个 <source> 元素匹配不同的设备并引用不同的图像源，如果没有匹配的，就选择 <img> 元素的 src 属性中的 url。
+<picture>		<source madia="(min-width:像素)" srcset="图片位置">当页面小于xxx是显示这个背景
+<source>		<source madia="(min-width:像素)" srcset="图片位置">当页面小于xxx是显示这个背景，可以在嵌套一个img
+		<img src="图片地址" alt=“无法显示图片显示这个” style="width:auto;"><img> 元素是放在最后一个 <picture> 元素之后，如果浏览器不支持该属性则显示 <img> 元素的的图片。
+
+声明	h1,h2,h3,h4,h5,h6,p,h2.special#one{  集体声明定义类型； }
+字体大小	font-size：20px；（大小）color：fffff；（颜色）
+居中	text-align："center"居中；letf左，right右
+背景颜色	background-color：背景颜色；
+外边框	margin：设置外边框  0 auto；计算外边距  下文盒模型有详细
+内边框	padding：设置内边框  下文盒模型有详细
+边框	设置边框  border :数字px 样式如solid  颜色懂 ,例如border：2px  solid  #ff33ee  下文盒模型有详细
+图像均不允许出现浮动元素	clear：left左侧不允许浮动元素，right右侧，both左右两侧
+百分比行高	line-height:90%；   使段落生出行内框
+
+div：
+ float: left;向左浮动  right向右
+vertical-align: sub垂直对齐文本的下标;    middle父元素的中部，super垂直对齐文本的上标，还有几个 百度。
+<div  id="d2">可以多次嵌套div，定义是#+id</div>
+<span id="" class="">div是块标记，含范围较大会自动换行。span是行标记内容较窄不会自动换行，div可以嵌套span，但是spam不能嵌套div</span>
+ 超链接加图片 div嵌套定义样式  <div id=“”class=“”><a href="#"><img src="" alt="无法显示图片显示这个"></a></div>      在<style>  中  div a:hover img{ 定义样式}
+
+
+
+
+
+
+
+
+
+align=“center"——居中——       图像中线和当前行的文字中线对齐，当前行高度相应扩大
+ align=“letf"——居左显示——   图像左对齐，浮动游离于文字之外，文字环绕图像周围，文字行高度没有任何变化
+align=“right"——右对齐——      图像右对齐，浮动游离于文字之外，文字环绕图像周围，文字行高度没有任何变化
+align=“justify"——两端对齐——“同上”
+align="top"  图像顶端和当前文字顶端对齐，当前行高度相应扩大
+align="middle" 图像水平线和当前行的文字中线对齐，当前行高度相应扩大
+align="bottom" 图像的地段和当前行的文字低端对齐，当前行高度相应扩大
+
+img 插入图片  :
+
+hapace="水平间距数值" 调整图像左右两边的空白距离，下面那个是调整图像上下两边的空白距离。   
+vspace="垂直间距数值"  这两个都是以像素为单位，但在编写代码是不需要加上单位：像素，否则 不会产生效果。
+
+<img src="图片地址"  width="宽度" height="高度"hapace="水平间距数值" vspace="垂直间距数值"
+    align="居中或.." border="边框大小" title="替代文本" alt="无法显示图片显示这个">
+
+<a href="网页链接"><img src="图片位置"usemap="#映射图像名称（要加#号）" width="宽度" height="高度" align="居中或.." 
+        border="边框"  alt="无法显示图片显示这个"></a>
+        <map name="映射图像名称">    配合<area>可以实现一张图片点这个位置打开一个网页 点那另一个位置打开另一个 去man.ilovefishc.com查看具体操作
+点不同位置打开不同网页            <area shape="热区形状（英文拼的形状）" coords="热区坐标（数字）" href="链接" alt="无的时候显示"
+            title="放上面显示">  /*area标记总是嵌套在map标记中：有三个属性是：shape定义热区形状（rect矩形（x1,y1,x2,y2）
+、circle圆形（center-x、center-y、radius）、poly多边形(x1,y1,x2,y2...xi,yi,..xn,yn,x1,y1)((n+1)*2个值，n为多边形的顶点数)）
+、coords定义热区坐标（和shape对应的坐标值）、href定义此区域目标的网址。*/
+        </map>
+
+无序列表：
+<ul type="disc实心圆""circle空心圆""square实心正方">默认是小点点,   可以用style定义是图片list-style-image：url("图片地址")
+ <li type="可单行改变(不改变不写)">文字</li>
+<li>文字</li>   list-style-type:none;   去掉列表前面的符号在<ul 里设置>
+</ul>
+
+有序列表：
+ <ol  无格式是数字，type="A"是大写字母，"a"是小写,"I"罗马字符大写，“i”罗马字符小写 ，reversed数字降序，start="数字"列表起始值>
+  <li type="输入上边">单行改变</li>   可以用style定义是图片list-style-image：url("图片地址")
+<li></li>
+</ol>可嵌套，被嵌套的以后往后退一点
+
+定义列表：  
+<dl>里面用(<dd>||<dt>)</dl>   可以用style定义是图片list-style-image：url("图片地址")
+<dt></dt>术语   可以多条术语多条描述 看需求
+<dd></dd>描述
+
+
+超链接：
+<a href="http://www.baidu.com网址"， target="_blank在新窗口打开，_self在当前打开，_parent父框架集中打开被链接文档，_top在整个窗口中打开被链接文档"， title="放在上面显示字体">百度一下</a>
+
+<a href="自己的网页名字.html相对 内部（自己做的），http://别人的网页   绝对 外部（百度、腾讯）"></a>
+
+<a href="http://www.baidu.com网址"><img src="" alt=""可以嵌套图片更改大小用width> </a>
+
+ <a href="#">表示空连接</a>
+
+
+书签超链接：
+<a href="相对网页链接#EditPlus">另个网页</a>
+
+<a href="#自己打">跳到同一网页的定义位置</a> —— <a name="要和上面的相同">被跳转的网页位置</a>（也可以反向设置回到网页顶端末端！首页末页）
+
+滚动文字：
+   <marquee behavior="滚动方式（scroll循环往复 默认值、slide滚动一次、alternate来回滚动）" direction="滚动方向（up向上、down下、left左、right右）"
+ begcolor="背景颜色"hspace="空白空间（整数）"vspace="空白空间（整数）"scrollamount="滚动长度（数字px）"scrolldelay="滚动速度（数字ms）"
+loop="滚动次数（-1无限）"onmouseover=""onMouseOut="this.stop()"（鼠标放上去停止滚动）或"this.start()"(不放上去继续滚动)>
+   滚动内容可嵌套标签先定义样式</marquee>
+滚动音视频：
+<embed src="文件路径" type="" loop="true循环、false不循环"autostart="true（自动）、false（不自动）" 有音乐视频宽高设置为0>
+
+
+表格盒模型：
+表格：
+	<table  可以在里面设置>    定义一个表格  (要用style 定义表格样式，下面表格盒模型有样式，)    
+		<caption>表格的标题</caption>  自己有居中元素，必须进挨着table
+		<tr>     定义表格里的行
+			<th>会对里面的内容居中加粗</th>  定义表头单元格
+		<tr>
+		<tr>
+			<td>普通的文字，可以是文本、图片、列表或另一个表格</td>  定义数据单元格
+		</tr>
+	</table>
+单元格之间的间距		cellspacing="像素px"；在 table 中内联样式
+单元内容与边框的距离	cellpadding="像素px"； 在 table 中内联样式
+设置表格边框样式		frame=""；above 显示上边框,bleow 显示下边框, hsides显示上下边框 ,vsides 显示左右边框,lhs 显示左边框,rhs 显示右边框 , border 显示上下左右边框,void 不显示边框
+设置表格内部边框样式	rulse=““；all 显示所有内部边框，none 不显示，rows仅显示行边框，cols仅显示列边框，groups显示介于行列间边框
+亮边框的颜色		bordercolorlight  内联样式   左侧和上侧是亮面
+暗边框的颜色		bordercolordark  内联样式   右侧和下侧是暗面
+背景颜色			bgcolor  内联样式
+背景图像			background：图片路径	内联样式  
+<tr>行内容水平对齐		align=""center居中 | left左 |  right 右   内联样式
+<tr>行内容垂直对齐		valign=“”top顶端对齐  |  middle中间对齐  |  bottom 低端对齐   内联样式
+合并表格边框		border-collapse:collapse;  为表格设置合并边框模型，
+合并单元格 跨列     		colspan：数字    元素的内联属性 例如：<tr colspan：数字几个单元格> 也可以<td>
+	跨行		rowspan：数字   也是元素内联属性
+表格颜色	内联样式		<colgroup>   <col  style="background：颜色"内联样式颜色>  <col  span=“数字几列”style="background：颜色">  </colgroup>  
+
+边界margin 	外边框	margin-top:20px；设置上外边框，right右外边距，bottom下外边距，left左外边距，margin：10px（四个都是10） 10px 20px（10表示上下，20左右）10px20px30px（上和左右和下）输入4个值是（上右下左）
+
+边框border  	border-（边框样式 top为实线上边框，right点线右边框，bottom虚线下边框，left点线左边框）- 后面要加“style”{ 可以在加属于值   none定义无边框   solid实线，dotted点状边框，大多浏览器呈实线，
+   dashed虚线，大多浏览器呈实线， double双实线宽度等于border-width的值 ，groove凹型线，效果取决于border-color， ridge垄状边框，效果同上，  inset嵌入线，效果同上， outset嵌出线，效果同上}
+border-width-（thin定义细的边框，medium默认，中等的边框，thick粗的边框，length自定义边框的宽度）
+border-color：颜色关键词  ||  RGB值
+border-image	设置所有 border-image-*属性的复合属性
+border-radius	圆角边框       可    设置所有四个border-*-radius属性的复合属性
+border-radius：	水平半径（1~4个值）px | | %   垂直半径 （1~4个值）px | | %   可以设置多个数据  成为多边形圆角  几个值 几个边 最低 4边圆角
+border-radius：2em  等同下列4个半径定义	border-top-letf(或者 right)-radius:2em; 定义右上角半径（定义右下角半径），border-bottom-letf(或者 right)-radius:2em; 定义左下角半径（定义右上角半径）
+
+边框阴影 	box-shadow：	  可以多个设置数值，向矩形方框添加一个或多个阴影，shadow 必需 水平阴影的位置可以负数，shadow 必需 垂直的 可以复数，blur  模糊距离，spread  阴影尺寸，color 阴影颜色，inset 将外部阴影改为内部
+例如：box-shadow：0 0 30px 20px red inset        设置一个内边框红色，数字是多少多少值
+
+填充，内边框设置	padding：长度 ||  百分比  padding-top：绝对单位，上内边框，right右内边框，bottom下内边框，left左内边距。
+内边距	padding：10px（上下左右），10px20px（上下10，左右20）10px20px30px（上10，左右20，下30），10.20.30.40（上右下左）
+内容content~好像插入网址不太了解！
+
+
+
+表单：
+<form  要用php> <button>文字例如登录</button></form>是一个容器表单的容器
+属性	name=“这个是提交到哪里去”  给表单名称好用来调用JavaScript或VBScript，提交信息是他
+	action=“文件路径”指定提交位置，处理表单的服务器应用程序，取值一般是一个url地址  例如：提交给谁是JavaScript还是谁谁谁
+	method="get  ||  post"  指定表单处理表单数据方法，可以去 get默认（提交的会在网址上显示出来），和post这个好一点。formmethod="get || post"(可以覆盖使用)
+	enctype=“text/plain”  编码方式
+输入验证		novalidate="novalidate" 在form中内联样式 。表单不会验证表单的输入，提交表单时不对其进行验证
+辅助填充显示	autocomplete=“on默认”off关闭，可以全部关闭，然后内内联样式里单个开启
+分框	<fieldset>分成几个段，每段是一个框框，下面是标题，可以用style定义样式
+标题	<legend aligin="居中或左右">域标题</legend> 这个就是框框的标题，只能在<feildset>中实现
+input属性		<input name="名字" type=“text”value=“输入框里直接出现的内容”（readonly，复选框和单选框要有）>~~~  文本输入框
+		<input name=“类”maxlength= "数字"可以输入的字符长度，size="数字"文本框的长度，value=“输入框里直接出现的内容” ，autofocus自动聚焦（直接可以输入）,disabled和后面那个一样但是这个直接变灰了（这个不会提交上去哦），readonly只能看文本框不能改（要用value=“看到的内容，如：男”）>
+input可在style调节样式，有name的哦	
+type输入	<input type=""text单行文本，password密码输入框不显示输入内容，checkbox复选框（可以选好几个男女都选啊），radio单选框（只能选中一个，男或女）>
+	<input type=""color颜色选择框，date时间日历（年月日，没有时间），datetime-local本地时间 年月日 有时间，email邮箱地址栏，file文件上传，hidden隐藏框，>
+	<input type=""image图片，month日历（年月），number数字，radio滑块，search搜索字段，tel电话号的字段，time时间栏，url网址，week周年栏>
+	
+type按钮	<input type="" image图像按钮，submit提交按钮，reset重置按钮，button普通按钮，（value=“可以改按钮的名字但是属性不变”）
+图像按钮	<input type="image" value="" src="#" width="" height="">可以设置图像坐标，点不同的位置出现不同的效果
+普通按钮	 <input type="button(也是一个标签《小甲鱼》)" value="按钮名字" onclick="JavaScript:alert( ' 转到JavaScript设置，会弹出对话框 '   )";>会弹出对话框
+复选框	<intput type="checkbox" name="多个时这个名字要一样" value="">游戏~~~~
+		<intput type="checkbox" name="多个时这个名字要一样" value="" checked=“checked（复选框默认选择）”>上网，   这两个是复选框可以同时选也可以选一个，也可以在加几个选多个
+	<select name="这个是提交到哪里去"> <option>男</option><option>女</option></select>
+单选框	<input typr="radio" name="两个要一直" value=""  checked=“checked（复选框默认选择）>	女生  <input typr="radio" name="两个要一直" value="">男生   ，只能选一个	
+</fieldset></form>
+下拉选择	<select name="这个是提交到哪里去" multple复选(要按ctrl键)  > <option    selected （设置预选）>男</option><option>女</option></select>
+下拉选择	<datalist id="用来和type的list来关联"><option value="内容">这也是内容 可以多个这种标签用来选择<option></datalist>
+连接上边这个	list="id名字"这个属性在要显示的type里，可以让上面的在任意地方定义用这个来连接
+下拉带标题	<select> <optgroup label="标题">在里面使用<option></option></optgroup>被<select>包裹
+			
+点文字也可输入框 这个真的牛 可以包裹一切	<label>里面包裹<input>例如输入名字的时候点<input>前面的文字也可以直接进入输入框输入</label>
+  for		<label  里面可以有内联 for=“名字在<input>内联定义的”>这个包裹<input>的文字</label>  <input>
+例如：	<label for="gay">你叫什么名字：</label><input type="text" name="name" id="name"><br><br>  这样点名字就会在第二个输入，让他俩换了
+	<label for="name">你是不是基佬：</label><input type="text" name="gay" id="gay"><br><br>
+接受多行文本输入	 <textarea form=“” name="" id="" cols="数字，文本区内可见的宽度" rows="数字，文本区内可见的行数" wrap=" ">可以在这里输入在默认，影响别人输入</textarea>
+属性	autofocus 在页面加载后文本自动获得焦点，cols=“数字”文本区内可见宽度，disabled 禁用该文本区域，maxlength =“数字”文本区域的最大字符数，placeholder=“提示内容”文本区域的占位提示信息
+	readonly 文本区为只读，required 文本区域为必填项 不能空着，rows=“数字”文本区内的可见行数，wrap=“” hard（文本进行自动换行行符（CR + LF）也会一并提交，有他必须设置 cols ），soft （表示在页面渲染中对文本进行自动换行，但换行符（CR + LF）不提交），off（ 表示在页面渲染中不对文本进行自动换行。）
+搜索框	加一个点文字输入<label>文字<input type="search" name=""></label>  
+文件上传	<input type="file"name="">        //还有在form里加入enctype="muktipart/form-data(没有这个是不能解码的，默认的只能解码文字)"
+指定上传文件类型	accept=".jpg,.html,.avi(多个要用英文逗号隔开)"还可以筛选出要上传的文件类型哦  image/*指定所有图片，audio/*指定所有音频文件，video/*指定所有视频文件， MIME类型上传 具体是百度吧
+限制上传文件尺寸 大小	<input type="hidden 隐藏框" name="" value="尺寸大小">
+上传多个文件	在<input>标签中加一个 multiple 就可以了
+
+限制数字输入	<input type="number" name="">用户就只能输入数字了
+限定数字输入范围	万一输入负数呢所以就有这个了 <input type="number" name="" min="数字 最小" max="数字 最大" step="数字，跨度，有一个小箭头一下点加减多少填多少">
+ 
+数值滚动条滑动条	<input type="range" name="" value="1" min="1"max="10000" step="100">后面几个值可以不设置使用默认值，不过还是自己设置的稳
+					初始值是“1”跨度100，只能显示101、201，最大100001超过max所以只能显示9901这个要注意哦
+占位提示文本	<input  type="text" name=""placeholder=“提示内容”>在输入框里显示内容不影响输入，加上这个可以不填直接绕过提交 ，加上这个必须填 required 文本区域为必填项	
+
+滑动输出计算结果	在form中定义用 oninpt="x.value=praseInu(a.value)+parseInt(b.value)"这个是<input>定义的两个id"a,b"的值，value也是input中设置的value的值
+		然后在后面<output name="x上边定义的" for="a b 意思是结果来自于哪里">默认值是（决定于要计算的几个value值的和）</output>
+
+   嵌入网页：
+	<iframe src="网址地址（嵌入地图要加上坐标）" frameborder="0" width="1024px" height="800px"> 当浏览器不支持的时候显示的文字</iframe>在这个网页中打开另一个操作，可以播放视频，也可以嵌入地图哦
+属性	sandbox=“”不填就是最高限制（就看看文字，也不能跳转），  是为了防止嵌入的第三方网址有木马什么的来限制	
+		allow-formas允许提交表单，allow-script允许执行脚本，allow-same-origin允许同域请求，allow-top-navigation允许iframe能主导window.top进行页面跳转
+		allow-popups允许iframe中弹出新窗口，allow-pointer-lock允许在iframe中可以锁定鼠标
+
+ 嵌入视频：
+
+<video width="576" height="576" src="序列 01_1.mp4" controls（加这个可以播放） autoplay（加这个自动播放，不是所有浏览器都合适，但是加上后面那个元素就可以播放了 不过没有声音） muted（无声播放自己点声音，）></video>
+	属性值	loop 当视频播放完在再次开始播放    
+		perload：auto进入网页预加载，none 不点播放不会加载，会白白的不显示哦  metadata先显示出视频窗口
+ 		poster  封面第一帧的图片  poster=“图片地址”可以自己设置图片
+加视频地址备胎	可以添加备胎 <source src="视频音频路径" type=“文件格式”>例如：<source src="序列 01_1.mp4" type="video/mp4"></video>
+
+嵌入音频：	
+
+<audio src="音频路径" controls（要加这个哦） autoplay（音频在就绪后马上播放） loop （循环） muted（静音播放）>当网页不支持音频的时候显示</audio>
+		preload ：auto（尽快加载整个音频，默认）  metadata（只加载音频的元数据） none（再点击之前不会加载音频） 如果元素中有autplay（马上播放）则元素perload不会生效，直接被忽略了
+音频地址备胎和视频一样！
+ 
+字幕：要用后缀  .vtt  要新建一个文本
+
+开头要输入：WEBVTT    
+	然后从什么时候开始就是  00:00:00.000小时分钟秒和毫秒，然后  --> 结束的时间 00:00:00.000
+	00:00:09.250 --> 00:00:11.270
+然后开始出入字幕~~    
+	在<video>中添加<track src="字幕路径" srclang="zh”（中文，en英文"指定文字的语言  label=“中文字幕”（指定 一个标签）kind="好多元素"    default(指定为默认加载)>
+	kind=“”captions将在播放器中显示的简短说明，chapters定义章节，用于导航媒介资源，descriptions定义描述，用于通过音频描述媒介的内容，假如内容不可播放或不可见，metadata定义脚本使用的内容，subtitles定义字幕，用于在视频中显示字幕。
+
+
+
+CSS：
+	为了再不同浏览器上兼容要在样式属性前面加一些不同的前缀：	
+-wbkit-:用于webkit 核心浏览器，包括safari、Chrome等 谷歌
+-moz-:用于firefox浏览器	火狐
+-ms-:用于IE浏览器
+_o-：用于Opera浏览器 
+
+精准定位选择器：
+	 通用选择器：*{ } 全部元素都要包括	
+	元素选择器：h1、p{ } 标签元素，如果覆盖可以在指定得元素中重新定制
+	类选择器：. 点  后面加  class="这里面的值" { } 
+	id选择器： # 后面加 id=“{ } 这里面的值”id选择器是唯一得哦
+	交集选择器：元素选择器 . 类选择器 { }  | |  元素选择器 # id选择器 {   } 	
+	并集选择器：选择器1，选择器2，选择器3  {  }
+	后代选择器： 选择器1  选择器2   选择器3 { } 先运用选择器1，再从匹配元素得后代中找出选择器2得元素如果存在选择3就如上一样（就是例如  body 空格 #id选择器（要在body中可用）这就是后代）
+	子元素选择器：选择器1 > 选择器2   只选择匹配元素中得直接子元素  （ body>.class(类名)选择器 不是这个类名得选择器没有效果）
+	相邻兄弟选择器：选择器1+选择器2      （ p+h1 两个要紧挨着还要再body中  ）   两个近邻得选择器必须有共同的父选择器
+	通用兄弟选择器：    选择器1~选择器2  （p~h1 两个不用紧挨着要都在一个父元素中（同上就是可以不挨着））   要在同一个层级 匹配的元素在指定得元素之后位置不用紧挨着不和上面那个一样 但都要在父元素中
+
+"伪类选择器"和"伪元素选择器"的区别是css是为了格式化文档树以外的信息。
+	伪类用于当已有元素处于的某个状态时，为其添加样式。(前面属于官方) 伪类其实就是再不创建类的情况下实现了相当于创建类的功能（就是假装有个类）
+	为元素用于创建一些不在文档树的元素，为其添加样式。(前面属于官方)        （就是假装有个类）
+
+伪元素选择器： 两个冒号   少部分不用
+
+一行有效		::first-lne { 元素 属性 }  仅对块元素内的第一行内容有效，而象a元素这类行内元素，是不起作用的。如果只对一个元素定义 就在   p: :前面加上<标签名字>
+一个字有效	::first-letter {  }  仅对块元素内的第一个字符有效  如果只对一个元素定义 就在   p: :前面加上<标签名字>
+可以不用标签在头和尾插入内容：		
+在前插入		::before { } 在被选元素的内容后面插入内容。请使用 content 属性来指定要插入的内容。在 : :前面写<标签>内容，元素上content：内容 | | 也可以插入图片  url（路径）
+在后插入		::after { } 在被选元素的内容后面插入内容。请使用 content 属性来指定要插入的内容。在 : :前面写<标签>内容，元素上content：内容 | | 也可以插入图片  url（路径）		
+文本选中样式	::sekection { } 这个设置以后要打开浏览器选中文字显示效果（效果很好哦）
+
+伪类选择器：  一个冒号  少部分不用
+
+动态伪类选择器：根据条件的改变来匹配元素 一般用(也不是只用在)在 a 元素上的，就是超链接 
+一般用在	        L	:link  链接未被访问的时候 {  } a 在冒号前面 这四兄弟有先后顺序的 LOVE&HAYTE（爱恨原则）
+a 元素上的       V	:visited	 链接被访问过的时候（回来再看的时候）   { }a 在冒号前面 这四兄弟有先后顺序的 LOVE&HAYTE（爱恨原则）
+也叫锚点元素   H	:hover  当鼠标悬停在链接上方的时候  { }a 在冒号前面 这四兄弟有先后顺序的 LOVE&HAYTE（爱恨原则）
+这4个用在	       A	:active  鼠标摁下那一刻  { }a 在冒号前面 这四兄弟有先后顺序的 LOVE&HAYTE（爱恨原则）
+获得焦点时的样式	:focus 输入框能够获取键盘输入的时候，就说明获得了焦点，可以的id选择器和伪类选择器链接，例如：input # id名字 : focus { }  配合表单输入效果很好看
+
+UI伪类选择器： 对应表单来设置的样式
+可用	:enabled 可用   outline：画一条线（相当于边框一样的属性值上面找）
+禁用	:disabled	禁用  
+选项框	:checked	    当表单元素选项 被选中的时候嘞样式（可用于单选框 复选框和下拉列表）
+加上	<span>嵌套在表单文字中用相邻兄弟选择器" + "来装饰样式</span>
+必选	:required 必选 
+可选	:optional 可选
+默认	:default 设置默认元素的样式
+合法	:valid     把设置的元素标签放在冒号前面
+非法	:invalid  
+在范围内	:in-range  在范围内的样式 ，就是在  input  标签中 type 的属性值为number 的时候 min 和max 属性来设置数值范围的样式
+不在内	:out-of-range  超出范围的样式，就是在  input  标签中 type 的属性值为number 的时候 min 和max 属性来设置数值范围的样式
+只读	:read-only  只读 来设置表单中只读的样式    如果使用的是Firefox浏览器需要在前面加上一个  -moz-  例如：<style> input : -moz-read-only { } </style>。
+可读可写	:read-write  可读可写(相当于正常的)  来设置表单中可读可写的样式 
+
+结构伪类选择器：
+	:root  最没用的，总是匹配到htnl选择器，就是根元素<body>、<head>这种大的，一设置一下全部都是i
+	:empty 用的最少 总是匹配没有定义内容的元素 就是空的什么都没有干的元素， 可以用宽高把这个元素撑起来。
+子元素第1	:first-child  所有元素中的第一个子元素的样式.例如：很多个<p>1~7个然后里面都包含着一个元素，就是设置第一个子元素的样式！冒号前面加 p ，要是再前面加上全部的<p>共同包含的一种元素 就是把这些全部包含的 "子元素" 设置样式 （对于 p 来说前面加的标签样式就是都是他们自己的子元素）。
+子元素后1	 :last-child 匹配最后一个子元素，和上面的正好相反 ，这个有可能会被 html 强制加一个看不出的元素占用，最好是换成 :last-of-type 下面有那个哦！
+	:first-of-type   和上面那两个差不多，就是范围更广了。这俩讲的不太明白，应该比上面的更好用一点
+	:last-of-type  和上面那两个差不多，就是范围更广了。这俩讲的不太明白，应该比上面的更好用一点
+独生子	:only-child 如果该元素是父元素的"独生子"他就会被选中，前面加上 独生子的标签名
+父里唯一	:only-of-type  属于父元素下唯一一个类型的的子元素(感觉和上面的一样哦)但是不一样，这个就算是有两个只要是不同的元素就可以生效	
+	:nth-child(n)  这四个和前面哪四个很像 不过他们都带了一个参数，就是可以指定感兴趣的索引，(n)这个就是指想要设置第几个子元素就输入第几个数字直接可以设置第三个子元素（正数） 使用后面两个更能实现目标
+	:nth-last-child(n)这四个和前面哪四个很像 不过他们都带了一个参数，就是可以指定感兴趣的索引，(n)这个就是指想要设置第几个子元素就输入第几个数字直接可以设置第三个子元素（倒数）这个也会有可能会被 html 强制加一个看不出的元素占用，使用后面两个更能实现目标
+	:nth-of-type(n) 和上面那两个差不多（应该是plus），就是范围更广了。这俩讲的不太明白，应该比上面的更好用一点
+	:nth-last-of-type(n) 和上面那两个差不多（应该是plus），就是范围更广了。这俩讲的不太明白，应该比上面的更好用一点
+
+其他伪类选择器：
+跳转前后	:target 用于 "页面内锚点"（是为了是实现页面内部跳转）来设置,要搭配 id 元素值  id#:target 来用 id标签要有超链接哦，
+	:lang	用于匹配 lang 全局属性的元素，有参数的再 标签内联样式设置 lang="zh(中文) | | (en英文)"，然后再再上<style>中设置 :lang(zh) {  } 
+	:not(除了这个全部取反) 否定选择器，可以对任意选择器进行取反操作（故意反着来）也不算是取反把就是这个选择器里是什么其他除了那个全部变成这里的这个效果
+
+属性选择器：
+	
+
+
+转换transform属性：
+2D转换：
+位移平移	translate(x,y)	transform:translate(50px,50px);向右移动50和向下移动50 ,(0，50px)向下移动50如果单一可以再（）前面加一个X（加Y 是向下移动50）(50px)向右移动50
+旋转	rotate(deg)	transform:rotate(10deg);顺时针旋转10° rotate 正数顺时针负数逆时针，语法：
+缩放	scale(x,y)		transform:scale(10px,10px); x值是便是缩放宽度的倍数，y是表示缩放高度的背书，可以负值 x 为横向倒置，y 为纵向倒置
+扭曲	skew（deg,deg）	transform:skew(deg,deg);将元素反转扭曲 给定的角度，参数x，y分别表示围绕x轴翻转给定的角度、围绕 y 轴反转给定的角度
+综合转换	matrix(n,n,n,n,n,n,n) 综合了上面的 旋转、缩放、移动(平移)、倾斜  transform:matrix(scaleX , skewX , skewY , scaleY , translateX , translateY)要按照这个顺序来条数字值
+3D转换：
+旋转	rotateX(数字angle);  | | rotateY(数字angle); x轴方向旋转一定角度，Y 轴方向旋转一定角度
+
+动画animation：
+		name名称，duration完成动画所花费的时间，以秒或毫秒计，timing-function动画的速度曲线，delay在动画开始之前的延迟，iteration-count动画应该播放的次数，direction是否应该轮流反向播放动画。play-state:(默认running，paused停止)动画是否正在运行或停止，fill-mode：（None、forwards、Backwards、both）对象动画时间之外的状态
+	要多用几次再不同浏览器上都可以实现，要加上前缀
+规则是创建动画	@keyframes    	animation: myfirst（名字） 5s; 把 "myfirst" 动画捆绑到 div 元素，时长：5 秒
+		@keyframes +上面名字也可以再下面那个声明 { 重开一个再这里定义动画样式  }  from {background: red;} \n to {background: yellow;}意思是从开始是红色结束是黄色，也可以多个以百分制的方法实现
+	可以更改颜色从左到右或者别的哪里哪里，这个是创建动画格式的核心，还有很多不足需要补充，樱花花瓣就是用这个做出来的！
+名称		animation-name名称
+动画所花费的时间	animation-duration：5s  ，完成动画所花费的时间，以秒或毫秒计
+动画的速度曲线	animation-timing-function:  linear从头到尾的速度是相同的,ease默认。动画以低速开始，然后加快，在结束前变慢,ease-in动画以低速开始,ease-out动画以低速结束,ease-in-out动画以低速开始和结束,cubic-bezier(n,n,n,n)在 cubic-bezier 函数中自己的值。可能的值是从 0 到 1 的数值
+动画开始之前的延迟	animation-delay:2s 等待两秒，然后开始动画,允许负值，-2s 使动画马上开始，但跳过 2 秒进入动画
+动画播放的次数animation-iteration-count:3,播放动画三次,infinite动画应该无限次播放	
+是否轮流反向播放动画 animation-direction:normal,默认值。动画应该正常播放	alternate动画应该轮流反向播放
+		
+多列文本布局:
+	columns	规定设置column-width和column-count的复合属性
+列数个数	column-count:数字几列， 规定元素应该被分割的列数
+column-width	规定列的宽度
+column-fill	规定如何填充列
+列的间隔	column-gap:数字px，规定列之间的间隔
+
+设置全部样式	column-rule	设置所有column-rule-*属性的复合属性
+	例如:column-rule：4px outset red；设置列宽度  线型 颜色
+column-rule-width	规定列之间规则的宽度
+column-rule-style	规定列之间规则的样式
+column-rule-color	规定列之间规则的颜色
+标题横跨的列数	column-span：数字（all跨全部列）	规定元素标题应该横跨的列数	
+
+文本效果：
+文本阴影	text-shadow：h-shadow(水平必填)   v-shadow(垂直必填)  blur(模糊程度)   color(颜色) 例如: text-shadow:2px 2px 8px red;
+文本换行	word-wrap：normal | | none | | unrestricted | | suppress (所有浏览器并不支持此应用，那你讲个屁啊)
+控制换行	word-wrap：normall(只在允许的断字点换行) | | break-word（自动换行） 在长单词过URL地址内部进行换行
+文本溢出	text-overflow: clip(修剪文本) | | ellipsis(显示省略符号来代表被修剪的文本) | | string(使用给定的字符串来代表被修剪的文本) 
+
+ 
+JavaScript：	<script></script> 脚本必须在这个标签之间 | | 里 面
+定义在<head>中要用函数 function(要用这个定义函数) sun(函数名){ 内容写在这里面 }
+  <script> </script> 脚本必须在这个里面 放在<head>和<body>
+引用	<script src="路径"> </script> 
+有HTML的标签效果
+
+数据类型：
+字符串	String	var string="";
+数字	Number	var 名称=数字;
+布尔	Boolean	var     flag=ture(1) | | false(0)
+数组	Array	var  名称=["","" ] ;  | | var 名称=new Array(应该是名称)（"","",""）; 也可以单独赋值
+对象	Object
+空	null	可以通过赋值为null来清除变量，把别的名称赋值 null 
+未定义	随便一个名字	var  随意；也可以再赋值使用
+
+运算符：
+可以字符串拼接，把两个字符串名称相加（任何类型与字符串相加都会变成字符串）
+
+=== 和 == 的区别是绝对，= = 是就算一个是"10"也等于一个10，但是 === 就不是就是绝对必须也满足类型
+!== 和 != 的区别和上面那个是一样的
+这个也有三目运算，可以输出汉字
+
+条件运算符：
+if（）{  }
+else if（）{ }
+else { }   可以无限嵌套运算符，就很变态哦， 忘了C语言也可以。
+
+alert（可以调用函数，可以输出）	弹出一个窗口打印值，可以连续弹出
+极客 4.25
+
+
+
+
+

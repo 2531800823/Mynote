@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 10
+typedef struct stack 
+{
+	int *stackMemory;
+	int stacktop;
+}Liu;
+Liu *createStack()
+{
+	Liu* maStack = (Liu*)malloc(sizeof(Liu));
+	maStack->stackMemory = (int*)malloc(sizeof(int)*MAX);  //给栈分配内存
+	maStack->stacktop = -1;  //为了让栈顶标记等于数组下表把它赋值为-1 不赋值为0
+	return maStack;
+}
+void push(Liu* myStack, int data)  //入栈
+{
+
+	myStack->stackMemory[++(myStack->stacktop)]=data; //入栈数组下标+1， 
+}
+//出栈
+void pop(Liu* myStack)
+{
+	if (myStack->stacktop == -1)   //当栈顶尾-1栈为空
+	{
+		printf("栈为空\n");
+		return;
+	}
+	else
+	{
+		myStack->stacktop--;  //不为空就出栈，下标-1
+	}
+	
+}
+//获取栈顶元素
+int top(Liu* myStack)
+{
+	if (myStack->stacktop == -1)  //为空把栈顶返回0
+		return myStack->stacktop;
+	return myStack->stackMemory[myStack->stacktop];//否则返回栈顶
+}
+int empty(Liu* myStack)//万金油空位0否则1
+{
+	if (myStack->stacktop == -1)
+		return 0;
+	return 1;
+}
+
+int main(void)
+{
+
+
+
+	Liu* head = createStack();// 接收一个栈顶的值
+	push(head, 1);       //入栈
+	push(head, 2);		//入栈
+	push(head, 3);     //入栈
+	while (empty(head))//万金油 判断是否为0或1
+	{
+		printf("%d  ", top(head));//获取栈顶元素
+			pop(head);//出栈出一个少一个知道栈空，万金油判定为0循环结束
+	}
+	printf("\n");
+	system("pause");
+	return 0;
+
+
+}

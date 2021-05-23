@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define N 100
+
+struct stack
+{
+	int top;  //统计栈中多少元素
+	int data[N];//栈中存储的数据
+};
+
+struct stack mystack = { -1,{0} };//创建结构体变量
+//-1代表栈中没有元素，{0}将数组全部初始化为0
+
+int isempty();//判定一下栈是否为空
+int setempty();//设置栈为空
+int push(int data);//压入一个数据
+int pop();//去出一个数组
+void tentotwo(int n);// 递归
+
+int main(void)
+{
+
+
+
+	int num = 100;
+	while (num)
+	{
+		printf("%d", num % 2);  //打印出二进制倒序
+		//push(num%2);  //入栈在出栈时就是2进制了
+		num /= 2;
+	}
+	while (isempty() != 1)  //栈空停止
+	{
+		printf("%d"   , pop());  //出栈
+
+	}
+
+	/*int a[10] = { 1,2,3,4,5,6,7,8,9,10 };
+	for (int i = 0; i < 10; i++)
+	{
+		push(a[i]);  //循环入栈
+	}
+	while (isempty() != 1)//栈空停止
+	{
+		printf("%d", pop());//出栈
+	}*/
+	printf("\n");
+	tentotwo(100);//二进制递归
+
+	system("pause");
+	return 0;
+}
+//判断栈是否为空
+int isempty()// 1代表为空  0代表不为空
+{
+	if (mystack.top == -1)
+		return 1;
+	return 0;
+}
+int setempty()//设置栈为空，但不清空数据
+{
+	mystack.top == -1;//设置栈我空
+
+}
+//入栈
+int push(int data)  //成功返回1 失败返回0
+{
+	if (mystack.top + 1 <= N - 1) //判断栈是否溢出 N-1是下标，top+1是新增一个元素是否溢出
+	{
+		mystack.data[mystack.top + 1] = data;   //把值赋给栈顶加一的位置
+		mystack.top ++; //栈顶加一
+		
+	}
+	else
+	{
+		return ;
+	}
+}
+//出栈
+int pop()
+{
+	if (isempty() !=1)// 1代表为空  0代表不为空
+	{
+		mystack.top--;  //栈顶减1
+		return mystack.data[mystack.top + 1];  //把栈顶减去的那个值打印出来，栈顶减一这里加1
+
+	}
+	else
+	{
+		return  -1;
+	}
+}
+//转换10进制为2进制
+void tentotwo(int n)
+{
+	if (n == 0)
+	{
+
+	}
+	else
+	{
+		int m = n % 2;
+		tentotwo(n / 2);
+		printf("%d", m);
+	}
+}
+
+
+

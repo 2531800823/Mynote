@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+typedef struct Node
+{
+	int data;
+	struct Node* next;
+}STU;
+STU* createNode(int data)
+{
+	STU* newNode = (STU*)malloc(sizeof(STU));
+	newNode->data = data;
+	newNode->next = NULL;
+	return newNode;
+}
+typedef struct Queue
+{
+	STU* frontNode;
+	STU* tailNode;
+	int size;
+}Liu;
+
+Liu* createQueue()
+{
+	Liu* myQueue = (Liu*)malloc(sizeof(Liu));
+	myQueue->frontNode = myQueue->tailNode = NULL;
+	myQueue->size = 0;
+	return myQueue;
+}
+void push(Liu* myQueue, int data)
+{
+	STU* newNode = createNode(data);
+	if (myQueue->size==0)
+	{
+		myQueue->tailNode=myQueue->frontNode = newNode;
+	}
+	else
+	{
+		myQueue->tailNode->next = newNode;
+		myQueue->tailNode = newNode; 
+	}
+	myQueue->size++;
+}
+void pop(Liu* myQueue)
+{
+	if (myQueue->size == 0)
+	{
+		printf("对空");
+		return;
+	}
+	else
+	{
+		STU* newNode = myQueue->frontNode->next;
+		free(myQueue->frontNode);
+		myQueue->frontNode = newNode;
+		myQueue->size--;
+	}
+	
+}
+int front(Liu* myQueue)
+{
+	if (myQueue->size == 0)
+	{
+		printf("对空");
+		return myQueue->size;
+	}
+	return myQueue->frontNode->data;
+}
+int empty(Liu* myQueue)
+{
+	if (myQueue->size == 0)
+		return 0;
+	return 1;
+}
+int main(void)
+{
+	Liu* list = createQueue();
+	push(list, 1);
+	push(list,2);
+	push(list, 3);
+	while (empty(list))
+	{
+		printf("%d",front(list));
+		pop(list);
+	}
+	system("pause");
+	return 0;
+}

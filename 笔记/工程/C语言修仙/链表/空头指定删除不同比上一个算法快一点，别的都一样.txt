@@ -1,0 +1,319 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+
+typedef struct Node {    //结构体
+	int a;//数据域
+	struct Node* next;//指针域
+}STU;
+STU* g_pHead = NULL;  //定义一个全局的头指针
+STU* g_pEnd  = NULL;  //定义一个全局的尾指针
+void AddListTill(int a);
+//创建链表，在链表中增加一个数据a  尾插法
+
+void AddListHead(int a);
+//创建链表，在链表中增加一个数据a  头插法
+
+void ScanList();
+//遍历链表  查全部  /查指定   就是打印嘛
+
+STU* SlectNode(int a);
+//查询指定a的结点
+
+void FreeList();
+//链表清空，全部释放
+
+void AddListRand(int index, int a);
+//在index位置插入一个a；
+
+void DeleteListHead();
+//头删除
+
+void DeleteListTail();
+//尾删除
+
+void DeleteListRand(int a);
+//指定位置a删除节点a得值
+int main(void)
+{
+	//这是一个有数据的头结点 不是空的！！！！！！
+	int a[10] = { 1,2,3,4,5,6,7,8,9,10 };
+	g_pHead;
+	int i = 0;
+	for (i = 0; i < 10; i++)
+	{  //创建链表并 用头插法 插入数据a[i]
+		AddListHead(a[i]); //可以用循环代替下面 那个方式静态方
+
+		//创建链表并 用尾插法 插入数据a[i]
+		//AddListTill(a[i]);//可以用循环代替下面 那个方式静态方式
+	}
+
+	/*AddListTill(1);
+	AddListTill(2);
+	AddListTill(3);
+	AddListTill(4);*/
+	ScanList();		//打印所有节点
+
+	/*  //查询指定5的结点
+	STU* pFind = SlectNode(5);        //	定义一个结构体指针接收要查找的数据，传递一个查找的
+	if (pFind != NULL)
+	{
+		printf("%d\n", pFind->a);  //把找的值打印出来
+	}
+	else {
+		printf("没找到\n");
+	}*/
+	
+	AddListRand(5,520);  //在指定5位置插入一个数据521
+	AddListRand(1,521); //测试在尾巴上添加一个
+
+	ScanList();		//打印所有节点
+
+	DeleteListHead();//删除头结点
+	DeleteListHead();//测试
+	DeleteListHead();//测试
+	DeleteListTail();//删除尾节点
+	DeleteListRand(1); //测试
+	DeleteListRand(10); //指定a2的值删除
+	ScanList();		//打印所有节点
+	FreeList(); //释放掉全部申请的堆内存，记得结束的时候释放
+
+	system("pause");
+	return 0;
+}
+
+//头删除
+//尾删除
+//栈==头添加+头删除 
+//队列==头添加+尾删除  尾添加+头删除
+//删除指定的值
+void DeleteListRand(int a)  //要删除那个就要传值了
+{
+	 //链表判断
+	if (NULL == g_pHead)
+	{
+		printf("链表尾空，无需释放");//要在链表不是空的情况下执行下面
+		return;//返回空
+	}
+	//链表有节点
+	STU* pTemp = SlectNode(a);   //定义过指定位置找了，直接调用函数
+	if (NULL == pTemp)
+	{
+		printf("查无此节点\n");
+		return;
+	}
+	//找到了
+	if (g_pEnd == g_pHead)//只有一个节点
+	{
+		free(g_pEnd); //释放谁都行
+		g_pEnd = NULL;
+		g_pHead = NULL; //记得把他俩都指向空
+	}
+
+	else  //这个就是有多个节点
+	{
+		if (g_pHead == pTemp)  // 删除头节点
+		{
+			DeleteListHead();//直接调函数删除头节点
+		}
+		else if (g_pEnd == pTemp) //删除尾节点
+		{
+			DeleteListTail();//直接调函数删除尾节点
+		}
+		else  //删除中间节点
+		{	//找删除的前一个节点
+			STU* pT = g_pHead;  //定义一个新的节点指向头结点
+			while (pT->next != pTemp)//当pT的next指向要删除的节点时结束循环
+			{
+				pT = pT->next; //指向下一个节点
+			}
+			//找到了
+			pT->next = pTemp->next; //把pT链接pTemp的下一个节点
+			free(pTemp);  //释放pTemp
+		}
+	}
+}
+//尾删除
+void DeleteListTail()
+{
+	 //链表检测
+	if (NULL == g_pEnd)
+	{
+		printf("链表尾空，无需释放");//要在链表不是空的情况下执行下面
+		return;//返回空
+	}
+	//链表不为空
+	//链表只有1个节点时 即使头也是尾
+	if (g_pEnd == g_pHead)
+	{
+		free(g_pEnd); //释放谁都行
+		g_pEnd = NULL;
+		g_pHead = NULL; //记得把他俩都指向空
+	}
+	else
+	{
+		 //先找到尾巴的前一个结点
+		STU* pTemp = g_pHead;  //定义一个新的节点指向头结点
+		while (pTemp->next != g_pEnd)//当新建的节点等于尾节点前一个时退出循环
+		{
+			pTemp = pTemp->next; //指向下一个节点
+		}
+		//找到之后进行删除
+		free(g_pEnd);//先把尾巴释放
+		pTemp->next = NULL; //把它变成最后一个节点
+		g_pEnd = pTemp;//再让尾巴指向最后一个节点
+	}
+}
+//头删除
+void DeleteListHead()
+{
+	//链表检测
+	if (NULL == g_pHead)  //要在链表不是空的情况下执行下面
+	{
+		printf("链表尾空，无需释放");
+		return; //返回空
+	}
+	//记住旧的头节点
+	STU* pTemp = g_pHead;
+	//链表只有1个节点时 即使头也是尾
+	if (g_pEnd == g_pHead)
+	{
+		free(g_pEnd); //释放谁都行
+		g_pEnd = NULL;
+		g_pHead = NULL; //记得把他俩都指向空
+	}
+	else {
+		g_pHead = g_pHead->next;//把头节点的下一个节点变成新的头
+		free(pTemp); //释放旧的头节点
+	}
+}
+//链表清空，全部释放
+void FreeList()
+{	//记录头结点防止被修改 丢内存
+	STU* pTemp = g_pHead; //把pTemp 继承g_phead的头
+	while (pTemp != NULL)
+	{
+		STU* pt = pTemp;           //不能直接释放pTemp没办法往下执行,要定义一个替死的
+		pTemp = pTemp->next;
+		free(pt);	//在这吧他处死
+	}
+	g_pHead = NULL;  //把头尾清空方便下一次创建
+	g_pEnd = NULL;   //前往不要忘咯
+
+}
+//创建链表，在链表中增加一个数据  尾插法
+void AddListTill(int a)
+{
+	//创建一个结点
+	STU* pTemp = (STU*)malloc(sizeof(STU));
+
+	//结点数据进行复制
+	pTemp->a = a;
+	pTemp->next = NULL; //建立一个结点一定要指向空
+
+	//链接上
+	if (NULL == g_pHead || NULL == g_pEnd)// 只要有一个是空就是一个空节点
+	{
+
+		g_pHead = pTemp; //链表没有东西，空链表既是头，也是尾
+		g_pEnd = pTemp;
+	}
+	else
+	{		//如果不是空的
+		g_pEnd->next = pTemp;   //让新建的结点连接上；
+		g_pEnd = pTemp;     //让g_Eng继续指向最后一个结点
+	}
+	//g_pEnd = pTmep;  //因为真假都要这么式子所以就把他拿出来，不拿也行
+
+}
+//创建链表，在链表中增加一个数据  头插法
+void AddListHead(int a)
+{
+	//创建一个结点
+	STU* pTemp = (STU*)malloc(sizeof(STU));
+
+	//结点数据赋值
+	pTemp->a = a;
+	pTemp->next = NULL;// 建立一个结点要先指向空
+
+	if (NULL == g_pHead || NULL == g_pEnd)
+	{
+		g_pHead = pTemp; //链表没有东西，空链表既是头，也是尾
+		g_pEnd = pTemp;
+	}
+	else
+	{
+		//pTemp->next = g_pHead->next;   //用这个是头结点是空的，没有存放数据的
+		//g_pHead->next = pTemp;
+		pTemp->next = g_pHead;  //因为要头插，可以插在最前面，不用担心有空节点，所以把新的结点指向第一个
+		g_pHead = pTemp;  // 把g_pHead还指向一地个结点，
+	}
+
+}
+//遍历链表  查全部  /查指定   就是打印嘛
+void ScanList()
+{
+	STU* pTemp = g_pHead; //把pTemp 继承g_phead的头
+	while (pTemp != NULL)
+	{
+		printf("%d  ", pTemp->a);
+		pTemp = pTemp->next;
+	}
+	printf("\n");
+}
+//查询指定的结点
+STU* SlectNode(int a)
+{
+	STU* pTemp = g_pHead; //把pTemp 继承g_phead的头
+	while (pTemp != NULL)
+	{
+		if (pTemp->a == a)
+		{
+			return pTemp;
+
+		}
+		pTemp = pTemp->next;
+	}
+	//没找到
+	return NULL;
+}
+//指定位置插入节点
+void AddListRand(int index, int a)
+{
+	//链表为空
+	if (NULL == g_pHead)
+	{
+		printf("链表没有节点");
+			return;
+	}
+	//找位置
+	STU* pt = SlectNode(index); //调用子函数，找到这个节点
+	if (NULL == pt)
+	{	
+		printf("没有指针节点\n"); 
+		return;//没找到返回
+	}
+	//找到以后
+	//给a创建节点
+	STU* pTemp = (STU*)malloc(sizeof(STU)); //新建一个节点
+	//给节点成员赋值
+	pTemp->a = a; //a是传进来要插入的值
+	pTemp->next = NULL;  //定义一个节点，记得先指向空
+
+	//然后链接上链表
+	if (pt == g_pEnd)  //找到的是尾节点
+	{
+		//尾巴指向新的结点，新节点变成尾巴
+		g_pEnd->next = pTemp;
+		//pTemp->next = NULL;  //不用在加这一句了，定义的时候已经指向了，我是为了让你明白
+		g_pEnd = pTemp;  //把最后一个节点赋值给  g_End 因为让他一直指向为节点
+	}
+	else   //如果不是尾节点
+	{
+		pTemp->next = pt->next; //先让新节点和pt指向的一样
+		pt->next = pTemp; //在让pt指向这个新的节点
+	}
+
+
+
+}

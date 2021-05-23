@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct NOde
+{
+	int data;
+	struct NOde* next;
+	
+}STU;
+
+typedef struct stack
+{
+	STU* stackTop;  //栈顶标记
+	int size;    //栈大小  容量 栈中元素个数
+}Liu;
+//创建节点
+STU* createNode(int data)
+{
+	STU* newNode = (STU*)malloc(sizeof(STU));
+	newNode->data = data;  //创建节点，赋值为空
+	newNode->next = NULL;
+	return newNode;
+}
+//创建栈就是创建一个结构体变量
+Liu* creteStack()
+{
+	Liu* head = (Liu*)malloc(sizeof(Liu));
+	head->stackTop = NULL;  //栈顶初始化为空
+	head->size = 0;  //初始化空
+	return head;
+}
+//入栈操作
+void push(Liu* head, int data)  //因为是头插法
+{
+	//插入的这个节点创建出来
+	STU* newNode = createNode(data);
+	//入栈的操作就是链表表头插入
+	newNode->next = head->stackTop;  //新插入的节点指向后面的那个元素
+	head->stackTop = newNode; //让栈顶一直指向第一个元素
+	head->size++;  //栈里多一个元素，大小加一
+}
+//获取栈顶元素
+int top(Liu* head)
+{
+	//防御编程
+	if (head->size == 0)  //判断栈是否为空
+	{
+		printf("栈为NULL");
+		system("puase");
+		return head->size;
+	}
+	return head->stackTop->data ;  //返回栈顶的值
+}
+//出栈
+void pop(Liu* head)
+{
+	if (head->size == 0)
+	{
+		printf("栈为空");
+	}
+	else
+	{
+		STU* nexNode = head->stackTop->next;  //新建一个，把栈顶的下一个赋值给他
+		free(head->stackTop);  //释放栈顶
+		head->stackTop = nexNode;  //把新建的赋值栈顶下一个赋值给栈顶，让栈顶指向第一个
+		head->size--;  //栈中元素减一
+	}
+}
+//万金油函数
+int empty(Liu* head)
+{
+	if (head->size == 0)  //是空栈返回0
+		return 0;
+	return 1;  //不空返回1
+}
+
+
+
+int main(void)
+{
+	Liu* head = creteStack();// 接收一个栈顶的值
+	push(head, 1);       //入栈
+	push(head, 2);		//入栈
+	push(head, 3);     //入栈
+	while (empty(head))//万金油 判断是否为0或1
+	{
+		printf("%d  ", top(head));//获取栈顶元素
+		pop(head);//出栈出一个少一个知道栈空，万金油判定为0循环结束
+	}
+	printf("\n");
+	system("pause");
+	return 0;
+
+}
