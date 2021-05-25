@@ -1,0 +1,126 @@
+文章分类:C++编程
+  由于项目原因，开始学习C++，刚接触半个多月，今天参考网上例子，写了个简单的C++连接ORACLE的DEMO，可是使用g++编译时不顺利，不是报这个错就是那个，最后参考网上的解决方式和个人理解，终于调试好了，现把编译中出现的问题和解决方法总结出来。 
+
+  源代码 
+ 
+C++代码
+#include <iostream>  
+#include <string>  
+#include "occi.h"  
+using namespace oracle::occi;  
+using namespace std;  
+  
+int main()  
+{  
+        string usr="sys";  
+        string pwd="orcl";  
+        string SID="ORCL";  
+        string date;  
+  
+        Environment *env=Environment::createEnvironment(Environment::OBJECT);  
+        Connection *conn= env->createConnection(usr,pwd,SID);//all strings  
+        if(conn)  
+                cout<<"success createConnection!"<<endl;  
+        else  
+                cout<<"failure createConnection!"<<endl;  
+  
+        Statement *stmt = conn->createStatement();  
+        string sSQL = "select to_char(sysdate,'yyyy-mm-dd hh24:mi:ss') from dual";  
+        stmt->setSQL(sSQL);  
+  
+  
+        ResultSet *rs = stmt->executeQuery();  
+        if(rs->next())  
+        {  
+                date = rs->getString(1);  
+        }  
+  
+        cout<<"now time :"<<date<<endl;  
+  
+        env->terminateConnection(conn);  
+        Environment::terminateEnvironment(env);  
+  
+        return 0;  
+}  
+    
+
+
+  本人linux上安装oracle路径：/opt/app/oracle/product/10.2.0/db_1 
+
+  编译命令：g++ -o conn -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -g 
+
+问题一：编译时报如下错误： 
+    
+Shell代码
+      [oracle@localhost demo]$ g++ g++ -o conn -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib -lclntsh -locci /usr/lib/libstdc++.so.5 conn_db.cpp -g  
+g++: g++: No such file or directory  
+conn_db.cpp:3:18: error: occi.h: No such file or directory  
+conn_db.cpp:4: error: 'oracle' has not been declared  
+conn_db.cpp:4: error: 'occi' is not a namespace-name  
+conn_db.cpp:4: error: expected namespace-name before ';' token  
+conn_db.cpp: In function 'int main()':  
+conn_db.cpp:14: error: 'Environment' was not declared in this scope  
+conn_db.cpp:14: error: 'env' was not declared in this scope  
+conn_db.cpp:14: error: 'Environment' is not a class or namespace  
+conn_db.cpp:14: error: 'Environment' is not a class or namespace  
+conn_db.cpp:15: error: 'Connection' was not declared in this scope  
+conn_db.cpp:15: error: 'conn' was not declared in this scope  
+conn_db.cpp:21: error: 'Statement' was not declared in this scope  
+conn_db.cpp:21: error: 'stmt' was not declared in this scope  
+conn_db.cpp:26: error: 'ResultSet' was not declared in this scope  
+conn_db.cpp:26: error: 'rs' was not declared in this scope  
+conn_db.cpp:35: error: 'Environment' is not a class or namespace  
+       
+
+   
+    解决：编译时没有引入OCCI头文件，如果没有，先下载对应的 ORACLE client安装，比如我的是oracle10g,下载了oracle-instantclient-basic- 10.2.0.4-1.i386.zip，解压到一个目录下(/home/oracle/oracle/include)，然后在编译文件的时候引进这个解压目录 
+
+   编译命令增加OCCI目录：g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -g 
+
+
+问题2：找不到对应函数 
+ 
+Shell代码
+   [oracle@localhost demo]$ g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -Wall -O -g  
+/tmp/cclFs9xq.o: In function `main':  
+/home/oracle/oracle/demo/conn_db.cpp:14: undefined reference to `oracle::occi::Environment::createEnvironment(oracle::occi::Environment::Mode, void*, void* (*)(void*, unsigned int), void* (*)(void*, void*, unsigned int), void (*)(void*, void*))'  
+/home/oracle/oracle/demo/conn_db.cpp:35: undefined reference to `oracle::occi::Environment::terminateEnvironment(oracle::occi::Environment*)'  
+collect2: ld returned 1 exit status   
+   
+
+解决：增加libocci.so和libclntsh.so指定编译 
+  
+  修改后的编译命令： g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -lclntsh -locci -Wall -O -g 
+
+  另外可能在引入-lclntsh -locci编译时可能会报找不到以下错误： 
+    
+Shell代码
+     [oracle@localhost demo]$ g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -lclntsh -locci /usr/lib/libstdc++.so.5 -Wall -O -g  
+/usr/bin/ld: cannot find -lclntsh  
+collect2: ld returned 1 exit status  
+[oracle@localhost demo]$   
+       
+
+     解决：这是因为没有找到libclntsh.so和libocci.so链接库,你在可以把oracle client安装目录下把这两个文件拷贝到$ORACLE_HOME/lib目录下，或加到/usr/lib目录下就可以了 
+
+问题三：occi在linux编译运行时报libstdc++.so.6冲突的问题 
+   
+Java代码
+[oracle@localhost demo]$ g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -lclntsh -locci -Wall -O -g  
+/usr/bin/ld: warning: libstdc++.so.5, needed by /opt/app/oracle/product/10.2.0/db_1/lib/libocci.so, may conflict with libstdc++.so.6  
+[oracle@localhost demo]$ g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -lclntsh -locci -Wall -O -g
+/usr/bin/ld: warning: libstdc++.so.5, needed by /opt/app/oracle/product/10.2.0/db_1/lib/libocci.so, may conflict with libstdc++.so.6
+
+  解决：OCCI库在linux编译的时候，由于linux版本太高，会提示以上情况，实际上，在大多数linux系统上，还保留有libstdc++5的库，自己手工在编译的时候加上去就好了 
+
+  修改后的编译命令：g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib -lclntsh -locci /usr/lib/libstdc++.so.5 conn_db.cpp -g 
+
+  编译通过后执行结果输出： 
+  
+Shell代码
+[oracle@localhost demo]$ g++ -o conn -I/home/oracle/oracle/include -L/opt/app/oracle/product/10.2.0/db_1/lib -L/opt/oracle/product/10.2.0/db_1/rdbms/lib conn_db.cpp -lclntsh -locci /usr/lib/libstdc++.so.5 -Wall -O -g  
+[oracle@localhost demo]$ ./conn  
+success createConnection!  
+now time :2010-11-14 22:49:24  
+[oracle@localhost demo]$  
+原文：http://lshirley2009.javaeye.com/blog/811301
