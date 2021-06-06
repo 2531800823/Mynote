@@ -181,7 +181,7 @@
 >    将一个weak_ptr绑定到一个shared_ptr对象，不会改变shared_ptr的引用计数。
 >    
 >    ```CPP
->                
+>                   
 >    ```
 >    
 >    
@@ -295,36 +295,36 @@
 >       	const char* p = &a;
 >       	return p;
 >       }
->                          
+>                                
 >       char* const foo2()
 >       {
 >       	char a = 'c';
 >       	char* const p = &a;
 >       	return p;
 >       }
->                          
+>                                
 >       const char* const foo3()
 >       {
 >       	const char a = 'c';
 >       	const char* const p = &a;
 >       	return p;
 >       }
->                          
+>                                
 >       int main()
 >       {
 >       	//char* p = foo();	//error，指向常量的指针不能赋给指向变量的指针
 >       	const char* p = foo();	//指向常量的指针
 >       	const char* const p4 = foo();	//把变量指针赋给常量指针，合法
->                          
+>                                
 >       	char* p2 = foo2();	//把常量指针赋给变量指针，合法
 >       	char* const p3 = foo2();	//常量指针
 >       	const char* p5 = foo2();	//指向变量的指针可以赋给指向常量的指针
->                          
+>                                
 >       	const char* const p6 = foo3();	//指向常量的常量指针
 >       	const char* p7 = foo3();		//指向常量的变量指针
 >       	//char* const p8 = foo3();		//指向变量的常量指针，error
 >       	//char* p9 = foo3();				//指向变量的变量指针，error
->                          
+>                                
 >       	cin.get();
 >       	return 0;
 >       }
@@ -413,7 +413,9 @@
 
 ### 右值引用
 
-
+> 一种新的引用类型，必须绑定到右值的引用，通过&&不是&来获得引用，右值引用只能绑定一个将要销毁的对象
+>
+> std::move：有一个左值，但我们希望想右值一样处理它，移动之后不再使用
 
 ### ++i和i++
 
