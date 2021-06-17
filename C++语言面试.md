@@ -11,7 +11,7 @@
 
 ### 面向对象和面向过程的区别
 
-> 面向对象：性能比面向过程高，因为类调用时需要实例化，开销比较大，比较消耗资源，当性能最重要的时候用。如：单片机、嵌入式。
+> 面向对象：性能比面向对象高，因为类调用时需要实例化，开销比较大，比较消耗资源，当性能最重要的时候用面向过程。如：单片机、嵌入式。
 >
 > 面向对象，易维护、易复用、易扩展，因为面向对象有了封装、继承、多态的特性，可以设计出低耦合的系统，是系统更灵活，但是性能没面向过程好
 
@@ -181,7 +181,7 @@
 >    将一个weak_ptr绑定到一个shared_ptr对象，不会改变shared_ptr的引用计数。
 >    
 >    ```CPP
->                   
+>                            
 >    ```
 >    
 >    
@@ -216,6 +216,8 @@
 >        1. atomic_类型 a;
 >     5. std::condition_variable
 >        1. 条件变量
+> 11. 静态断言
+>     1. static_assert(a>b,"错误信息") 在编译的时候就出错
 
 ### extern、volatile关键字
 
@@ -295,36 +297,36 @@
 >       	const char* p = &a;
 >       	return p;
 >       }
->                                
+>                                                  
 >       char* const foo2()
 >       {
 >       	char a = 'c';
 >       	char* const p = &a;
 >       	return p;
 >       }
->                                
+>                                                  
 >       const char* const foo3()
 >       {
 >       	const char a = 'c';
 >       	const char* const p = &a;
 >       	return p;
 >       }
->                                
+>                                                  
 >       int main()
 >       {
 >       	//char* p = foo();	//error，指向常量的指针不能赋给指向变量的指针
 >       	const char* p = foo();	//指向常量的指针
 >       	const char* const p4 = foo();	//把变量指针赋给常量指针，合法
->                                
+>                                                  
 >       	char* p2 = foo2();	//把常量指针赋给变量指针，合法
 >       	char* const p3 = foo2();	//常量指针
 >       	const char* p5 = foo2();	//指向变量的指针可以赋给指向常量的指针
->                                
+>                                                  
 >       	const char* const p6 = foo3();	//指向常量的常量指针
 >       	const char* p7 = foo3();		//指向常量的变量指针
 >       	//char* const p8 = foo3();		//指向变量的常量指针，error
 >       	//char* p9 = foo3();				//指向变量的变量指针，error
->                                
+>                                                  
 >       	cin.get();
 >       	return 0;
 >       }
@@ -491,15 +493,15 @@ const int int::operator++(int) //++i 可以连续，因为返回的是引用，i
 > class danli
 > {
 > private:
->     danli(){};
->     static danli *a_;
+>  danli(){};
+>  static danli *a_;
 > public:
->     static danli* get()
->     {
->         if(a_ == NULL)
->             a_ = new danli;
->         return a_;
->     }
+>  static danli* get()
+>  {
+>      if(a_ == NULL)
+>          a_ = new danli;
+>      return a_;
+>  }
 > };
 > ```
 >
@@ -509,13 +511,13 @@ const int int::operator++(int) //++i 可以连续，因为返回的是引用，i
 > class danli
 > {
 > private:
->     danli(){};
->     static danli a_;
+>  danli(){};
+>  static danli a_;
 > public:
->     static danli* get()
->     {
->         return &a_;
->     }
+>  static danli* get()
+>  {
+>      return &a_;
+>  }
 > };
 > ```
 >
