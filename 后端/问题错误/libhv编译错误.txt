@@ -1,0 +1,6 @@
+Ticks 15:51:31
+把动态库目录加到文件后面，然后sudo ldconfig刷新一下
+
+/etc/ls.so.conf  
+@南望. 写错了，是你这个路径
+

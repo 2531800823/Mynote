@@ -1,0 +1,152 @@
+cl /d1 reportSingleClassLayout  在vs2017开发中 在输入一个类可以查看 要到当前目录下面  然后还有项目名字
+黑马C++136-15分钟
+
+	exit(0);   //只要走到这一步 不管在哪程序就退出
+
+
+常对象这可以调用常函数 常函数不可以修改成员值   成员前面加上 mutable 就可以了
+
+void liu() const   这就是常函数       Class liu{ }；  const liu op；  op就是常对象 
+{
+	
+}
+
+多态 模板 查看它的类型用 ： typeid(T).name   查看T的类型
+
+
+
+运算符重载：	 operator 
+
+成员函数重载：
+ class operator+( class &p)
+{
+	class temp;
+	temp.a=this->a+p.a;
+	return temp;
+}
+然后 class num1，num2,num3;
+	num3=num1+num2;	本质： num3 =num1.operator+(num2); 然后简化成 +  形式了
+全局函数重载：
+class operator+(class& l,class &o)
+{
+	class temp;
+	temp.m_a = o.m_a + l.m_a;
+	temp.m_b = o.m_b + l.m_b;
+	return temp;
+
+}
+然后 class num1，num2,num3;
+	num3=num1+num2;    	本质： num3 =opetator+(num1,num2); 
+
+重载cout
+void  operator<<(ostream& cout,class &o)    ostream是cout转定义找到的类型 因为只有一个就用引用
+{
+	cout << a << "\t" << b << endl;
+
+}
+cout<< num1;  这个不可以在 <<endl; 了  因为没有返回值
+ostream& cout  operator<<(ostream& cout,class &o)
+{
+	cout << a << "\t" << b << endl;
+	return cout；
+}
+这样就可以了  这个就是链式思想  返回了一个cout 然后可以在<<endl来和她重载了 可以无线往后追加输出 
+
+
+类名+()  是一个匿名对象 用了就没有了  
+
+如果想从继承 子类对象里 得到父类一样的同名成员 调用的时候要加上父类的作用域
+例如： 子类 对象 ：父类{ }；    调用： 子类 . 父类：：成员
+	只要有同名的 想要调用父类的就要加上 父类：：作用域 
+
+继承中 通过类名作用域访问 同名静态成员    静态尘缘有两种访问方式
+子类：：成员
+父类：：成员     也可以 子类：：父类：：成员
+
+
+虚继承：virtual 解决菱形继承  
+纯虚函数： virtual void f()=0;    以为下面多态父类的虚函数不用就可以改成纯虚函数
+	当这个类中有了纯虚函数 就变成了一个抽象类
+抽象类:1、无法实例化对象（子类实现了也行），子类必须重写抽象类的纯虚函数，否则也是抽象类
+	就是你有一个类 如果别人想继承你就=0 让他必须实现这个函数
+
+满足动态多态的条件
+1、有继承关系
+2、子类要重写父类的虚函数	重写就是：函数的返回类型  函数名 参数列表 完全相同 才叫重写  
+3、在函数面前写一个 virtual  要放在父类的函数返回值前面  （加上以后就变成了  虚函数指针，占4个字节）指向一个虚函数表，里面记录着所有子类的这样的函数）
+
+动态多态的使用 （对孙子类也有影响）
+父类的指针或者引用  执行子类的对象     
+引用： 父类 &对象 = 子类对象； 然后调用
+指针：父类 * 对象 = new 子类； 然后调用
+
+
+虚析构和纯虚析构共性： 如果父子两个类中都没有需要在堆区的成员啥了 就可以不用写虚析构
+可以解决父类指针释放子类对象，都需要有具体函数实现
+
+区别：
+如果是纯虚析构 该类属于抽象类，无法实例化对象
+
+解决问题：为什么要用 虚析构
+因为父类的对象在析构的时候不会去走 子类的析构 （根据上面的子类通过父类进行了多态，申请了成员指针，但是没有调用子类析构）就会内存泄露 
+	父类加上虚析构就可以也调用子类的析构了
+
+纯虚虚构也是需要代码实现的： 因为父类如果也有在堆内存里申请的成员 要释放的	
+代码： 在类中 ~父类()=0;  在外  父类：：父类(){ //当然这里可以没有代码} 只有一个大括号就算是实现了
+
+
+文件操作：	<fstream>
+ofstream:写操作
+ifstream：读操作
+fstream:读写操作
+
+对象函数：
+	open("路径"，打开方式)
+	is_open()   !ifs.is_open()做if判断
+	eof() 读取到结尾返回true，它为真说明这个函数为空
+	read(char* 类型，大小 )
+	write(强转成const char *类型，这个大小)； 
+	close() 关闭文件	
+
+打开方式：
+	ios::in 	为读文件而打开
+	ios::out	为写文件而打开
+	ios::ate	初始位置：文件尾（貌似是因为没这个就是在头）
+	ios::app	追加方式写文件 （就是继续写）
+	ios::trunc	如果文件存在 先删除，在创建
+	ios::binary 二进制方式
+文件打开方式可以用 | 配合使用  
+
+步骤：写文件
+	1、包含头文件<fstream>
+	2、创建流对象 ofstream ofs;
+	3、打开文件 pfs.open("文件路径"，打开方式)；
+	4、写数据  ofs<<"写入的数据"；
+	5、关闭文件 ofs.close();
+
+步骤：读文件
+	1、包含头文件<fstream>
+	2、创建流对象 ifstream ifs;
+	3、打开文件并判断是否成功打开 ifs.open("文件路径"，打开方式)
+		2) ifs.is_open() 是一个bool返回类型 打开成功返回真 失败返回假
+	4、读数据 四种方式读取：
+		1）char buf[1024] = { 0 };while (ifs >> buf){cout << buf << endl;}  读完ifs>>buf就会返回false 循环就会结束
+		2）char buf[1024] = { 0 };while (ifs.getline(buf, sizeof(buf))){cout << buf << endl;}   getline(读到哪里，他的大小是多大)
+		3）string buf;while(getline(ifs,buf)){cout << buf << endl;}  getline(基础的操作对象，刚才创建的输入流对象，要放的字符串)
+		4）char c;while ((c = ifs.get()) != EOF)	{cout << c;} 不推荐这个 这是一个一个读的 效率很低
+	5、关闭文件 ifs.close();
+ 
+二进制文件操作: 
+写文件：
+	1、包含头文件<>fstream>
+	2、创建流对象 ofstream ofs(可以直接把第3步放着里面来 因为有构造函数，省点事)
+	3、打开文件 ofs.open("路径"，打开方式 | 记得加上二进制)
+	4、写文件 ofs.write(强转成const char *类型，这个大小)； 
+	5、关闭文件 ofs.close()
+读文件：
+	1、包含头文件<>fstream>
+	2、创建流对象 ifstream ifs(可以直接把第3步放着里面来 因为有构造函数，省点事)
+	3、打开文件 ifs.open("路径"，打开方式 | 记得加上二进制)  判断： 
+		2) ifs.is_open() 是一个bool返回类型 打开成功返回真 失败返回假
+	4、读文件 ifs.read(char* 类型，大小 )
+	5、关闭文件 ifs.close()

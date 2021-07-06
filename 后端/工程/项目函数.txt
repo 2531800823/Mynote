@@ -1,0 +1,12 @@
+  			具体用法自己查吧
+
+播放音乐： 	PlaySound()   头文件自己去查 还有静态链接库   只可以播放wav格式的音乐文件（用软件转换 改后缀没用）
+			返回值：成功返回true  失败返回false
+		参1：NULL停止所有音乐  ||   播放文件的路径 参3必须有 SND_FILENAME  || 音乐文件资源 参3 必须有 SND_RESOURCE 要用宏MAKEINTRESOURCE转换资源得到的(宏)
+		参2： NULL    ||  当前实例句柄 AfxGetInstanceHandle()   参3 是 SND_RESOURCE
+		参3 ：SND_FILENAME | SND_ASYNC（加上他是异步播放）    || SND_RESOURCE| SND_ASYNC
+
+停止播放：	还是那个函数 都填NULL 第二个填0 吧  第三个也是0
+ 
+读取一个字符：  _getch()   直接输入读取  不显示控制台 可用于开始的按键   头文件去查
+清空控制台： 	system("cls");
