@@ -53,3 +53,27 @@
 
    > https://cdn.bootcdn.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js
 
+### 获取url路径  purl
+
+1. 文档
+
+   > 下载： npm install purl
+   >
+   > gitHub: https://github.com/codematix/purl
+   >
+   > 浏览器： 去cdn 下载
+
+2. 实例
+
+   ```js
+   var url = purl(location.href);
+   // url 是一个对象函数组  
+    url.data()  // 具体参数解析都在这个里面 ， 里面 prarm.query = {id:10}
+   
+   // 在 jQuery 下 
+    var url = $.url(http://127.0.0.1:5500/manage-system/client/edit.html?id=10);
+    url.param("id")   //10
+    url.data()  // 具体参数解析都在这个里面 ， 里面 prarm.query = {id:10}
+   ```
+
+   
