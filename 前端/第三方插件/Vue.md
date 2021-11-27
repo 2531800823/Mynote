@@ -96,3 +96,18 @@ Vue.use(VueLazyLoad, {
 | `observer`        | 使用 IntersectionObserver | `false`                                                      | `Boolean`                                                    |
 | `observerOptions` | IntersectionObserver 选项 | { rootMargin：'0px'，阈值：0.1}                              | [路口观察员](https://www.npmjs.com/package/vue-lazyload#intersectionobserver) |
 | `silent`          | 不打印调试信息            | `true`                                                       | `Boolean`                                                    |
+
+### markdown转html  markdown-it
+
+> 文档： https://markdown-it.docschina.org/
+>
+> 安装：npm install markdown-it --save
+
+```js
+// 实例
+import MarkdownIt from 'markdown-it'
+const md = new MarkdownIt()
+// 返回的  html 标签  把 markdown 放入
+const result = md.render( '### 标题3 ' ) // dom 元素
+```
+
