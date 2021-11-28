@@ -84,7 +84,14 @@
 >      - 首屏可以部署在服务端，响应式界面，沉浸式体验（在支持 PWA 的浏览器和手机应用上可以直接将 Web 应用添加到用户的主屏幕上）
 >    - 使用 缓存优化（客户端，服务端缓存）： 协商缓存，强制缓存。 服务端开启 gzip 压缩
 >
-> 
+
+### Vue 初次渲染
+
+> 1. 步骤 ：
+>    1.  $mount ()  : 初始化 Vue
+>    2. mountComponent :   （渲染的入口函数）
+>    3. _render:（执行render函数，获得虚拟DOM）
+>    4.  __update:（将虚拟DOM转真实DOM并渲染）
 
 ### Computed 和 Watch
 
@@ -107,6 +114,61 @@
 > 	1.   计算 当进行计算，可以依赖缓存特性，避免每次都要计算
 > 	2.   当需要数据变化时 执行异步，或者 开销较大时，使用 watch , 限制执行该操作的频率，得到最终结果前，设置中间状态（防抖），计算属性不行
 
+### watch只监听对象上的想监听属性，如何排除其他属性监听 
+
+```js
+// 可以 直接监听   "params.a":{...}
+
+data() {
+    return {
+      params: {
+        a: 1,
+        b: 2,
+      },
+    };
+  },
+  mounted() {
+      // 遍历所有的对象属性， 筛选出要监听的属性
+    Object.keys(this.params)
+      .filter((item) => {
+        return item === "a";
+      })
+      // 遍历要监听的数组
+      .forEach((item) => {
+        // 用 vue 实例的 watch 开启监听
+        // $watch 参数1 要监听的属性， 2 监听的处理函数， 3 配置项， 可以深度和立即监听
+        this.$watch(
+          (vm) => {
+            vm.params[item];
+          },
+          this.watchFun,
+          {
+            deep: true,
+          }
+        );
+      });
+  },
+  methods: {
+    edit() {
+      this.params.a = 10;
+      this.params.b = 10;
+    },
+    watchFun() {
+      console.log("对象单独属性更新");
+    },
+  },
+  watch: {
+    // params: {
+    //   deep: true,
+    //   handler() {
+    //     console.log("更新了");
+    //   },
+    // },
+  },
+```
+
+
+
 ### slot
 
 > 是 vue 内容分发机制，插槽是子组件的一个模板标签  ，这个标签由父组件决定，有默认插槽，具名插槽和作用域插槽
@@ -114,6 +176,44 @@
 > 1. 默认： 匿名插槽，slot 没有 name 属性值的时候显示 默认的，一个组件只能有一个匿名
 > 2. 具名：带有名字的插槽，可以有多个
 > 3. 作用域: 可以有名字也可以无，不同点，在子组件渲染时，可以将子组件内部的数据传递给父组件，父组件根据子组件的数据决定如何渲染
+
+### vue 的 hook 使用
+
+1. 清除定时器
+
+   ```js
+    // 清除定时器
+    const timer = setInterval(() => {
+    console.log(1);
+    }, 1000);
+   // $once 监听，只触发一次 
+   // 使用 hook 调用 销毁前的生命周期函数 清空定时器
+    this.$once("hook:beforeDestroy", () => {
+    clearInterval(timer);
+    });
+   ```
+
+2. 父组件监听子组件的声明周期函数
+
+   ```vue
+   // 1. 用 $emit 监听
+   	// 父组件
+   	 <!-- 监听子组件的 mounted 事件 -->
+       <DomeChilred @changeMount="changeMount" /> // 监听处理 changeMount
+       // 子组件
+       mounted() {
+   		// 子组件声明周期 触发 就像父组件发信号
+       	this.$emit("changeMount", "监听成功");
+       },
+   // 2. 使用 hook 监听 --》 缺点是不可以携带子组件的参数到父组件
+   	// 父组件
+       <!-- 使用 hook -->
+       <DomeChilred @hook:mounted="changeMount" />
+        changeMount() {
+             console.log("子组件触发了 mounted");
+           },
+   	// 子组件 不用操作
+   ```
 
 ### 保存页面（组件）当前状态
 
@@ -175,6 +275,17 @@
 
 > 使用多个组件复用时，都使用data对象中数据，形成变量污染，主要是隔离作用域，让每个组件都有自己的数据
 
+### vue重置data或者获取data初始值
+
+```js
+// 初始值的 data
+console.log(this.$options.data());
+// 当前的 data
+console.log(this.$data);
+```
+
+
+
 ### LRU 缓存策略
 
 > 在内存中找出 最久没有使用的数据，换新数据 ， LRU 算法根据数据的历史记录进行淘汰，最常见的是一个链表保存数据缓存 ， 详细实现：
@@ -188,7 +299,7 @@
 > - 本质是对 js 执行原理  EventLoop 的一个应用，模拟对应的 宏/微  任务的实现，用 js 的异步 来执行  vue 的异步
 > - 在下次渲染完成调用，可以获取最新的DOM元素
 
-### $set  $delete
+### \$set  $delete
 
 ```js
 // 给对象或者数组添加一个响应式数据  
@@ -223,9 +334,58 @@ this.$delete( obj , name) // 对象
 > 1. 使用场景
 >    - 普通 DOM 元素进行底层操作，
 >    - 自定义指令用来操作 DOM 可以定义任何 DOM 操作，并且可以复用
+>    
 > 2. 使用案例
 >    - 鼠标聚焦
 >    - 图片加载错误问题，懒加载
+>    
+> 3. 属性： 第一个参数：指令名称  ， 第二个参数：配置对象，指定指令的钩子函数
+>
+>    配置对象：
+>
+>    - bind 只调用一次，第一次绑定的时候调用
+>      - 参数 ： el： 绑定的DOM元素
+>      - binding 对象:
+>        -  name 指令名
+>        -  value : 指定传入的值  v-imgerror ='就是他'
+>        - oldValue: 指令绑定的前一个值
+>        - expression:  字符串形式的指令表达式 等号后面的字符串 形式
+>        - arg: 传给指令的参数， 可选，v-my-directiive:foo 参数 foo
+>        - modifiers: 指令修饰符，例如：v-directive.foo.bar中，修饰符对象为 { foo: true, bar: true }
+>      - vnode:Vue编译生成的虚拟节点
+>      - oldVnode: 上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+>    - inserted (el , binding , vnode):  调用的时候，元素已经插入到页面，也就是获取到父节点
+>    - update (el , binding , vnode , oldVnode )：DOM重新渲染前
+>    - componentUpdated ( el , binding , vnode , oldVnode  )：DOM 重新渲染后
+>    - unbind ( el ) : 指令所在的元素在页面中消失，触发。
+>
+> 4. 简写 如果你想在 bind 和 update 时触发相同行为，而不关心其它的钩子 
+>
+>    - Vue.directive('自定义指令名', function( el, binding ) {})
+>
+> 5. 
+>
+>    
+
+### 动态指令
+
+```js
+<button @[event]="handleEvent">动态指令</button>
+
+data(){
+	return {
+		event:'click'
+	}
+},
+mothods:{
+    handleEvent(){
+        console.log("事件触发");
+      this.event = "contextmenu"; // 鼠标右击事件,点击之后就变成了  右击事件了
+    }
+}
+```
+
+
 
 ### 子组件可以修改父组件的数据吗
 
@@ -283,11 +443,11 @@ this.$delete( obj , name) // 对象
 ### 组件通讯
 
 > 1. 父子组件
->    - props / $emit 
+>    - props / \$emit 
 >    - ref /refs 
->    - \$attrs / $listeners 
+>    - \$attrs / \$listeners 
 > 2. 兄弟
->    -  \$parent / $refs | $children
+>    -  \$parent | \$refs | \$children
 > 3. 任意
 >    - eventBus 事件总线
 >    - Vuex
@@ -301,7 +461,7 @@ this.$delete( obj , name) // 对象
 >    - 没有 # 更好看，需要后端配置支持，不配置好 404 
 >    - 分两状态 ： 
 >      - 修改历史状态： H5新增，pushState 和 replaceState
->      - 切换历史状态 : forward back go 
+>      - 切换历史状态 : forward, back, go 
 
 ### \$router 和 $route
 
@@ -361,6 +521,41 @@ this.$delete( obj , name) // 对象
 >
 > vuex 刷新页面会丢失  localStorage 不会
 
+### vue.Observable ()进行状态管理
+
+> vue 2.6.0 版本， vuex 如果应用不够大，最好不要使用，可以使用跟这个 来进行一个简单的跨组件的 状态管理
+
+```js
+// 创建一个 store.js
+import Vue from 'vue'
+// 导出数据模块
+export const store = Vue.observable({
+    data: {
+        name: 'liu'
+    }
+})
+// 导出 修改数据函数 模块
+export const mutations = {
+    updata(val) {
+        store.data.name = val
+    }
+} 
+// …… 也可以定义 ations  getters module
+   
+// 使用  在别的文件中使用 操作一样
+<button @click="editName">修改数据</button>
+<button @click="edit('刘士朋')">修改数据</button>
+import { store, mutations } from "@/utils/store.js";
+editName() {
+      // 调用 修改
+      mutations.updata("刘");
+},
+//  或者
+edit: mutations.updata,
+```
+
+
+
 ### 虚拟DOM的理解
 
 > 1. 是对 DOM 的抽象，无需手动操作 DOM ，多次修改DOM修改的结果 一次性的更新到页面上,减少页面渲染次数，减少修改DOM的重绘重排(回流), 提高渲染性能
@@ -382,37 +577,13 @@ this.$delete( obj , name) // 对象
 
 > 1. 检测机制
 >    - 基于 Proxy 的 ObServer 实现，提供了 全语言覆盖，接触了 Vue2 的 Object.defineProperty的很多限制，
->    
 > 2. 对象只能检测属性不能检测对象
 >    - 对象属性 添加和删除
 >    - 数组 索引和长度修改
 >    - vue3支持了 Set Map WeakSet WeakMap
->    
 > 3. 模板
 >    - 作用域插槽变成了函数方式
 >    - 可以有多个根节点
->    
 > 4. 对象的组件声明方式
 >    - 生命方式改成了 类式的写法 setup()   和  ts 结合更容易
->    
 > 5. 过滤器删除，可以用计算属性来代替
->
-> 6. v-model 可以绑定多个数据
->
->    ```js
->    // 父组件
->    <Children v-model:name="name" v-model:age="age">
->    // 子组件
->    props:["name" , "age"]
->    methods:{
->        updateName(){
->        	this.$emit("update:name",'liu')
->        },
->        updateAge(){
->        	this.$emit("update:age",20)
->        }
->    }
->    ```
->
->    
-
