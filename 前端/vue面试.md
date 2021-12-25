@@ -51,21 +51,20 @@
 >    - v-if 和 v-for 不一起使用
 >    - v-for 尽量使用 事件代理
 >    - SPA（单页面应用）采用 keep-alive 缓存
->    - 尽量 v-if 代替 v-show
 >    - key 保证唯一
 >    - 使用路由懒加载，异步组件
 >    - 防抖节流
 >    - 第三方模块按需导入
 >    - 长列表滚动到可视区再加载
 >    - 图片懒加载
->
-> 2. ##### SEO 优化
->
->    - 服务端 渲染 SSR
->
-> 3. ##### 打包优化
->
->    - 压缩代码
+>    
+>2. ##### SEO 优化
+> 
+>   - 服务端 渲染 SSR
+> 
+>3. ##### 打包优化
+> 
+>   - 压缩代码
 >    - 使用 cdn 加载第三方模块
 >    - Tree Shaking/Scope Hoisting （摇树优化）/ (作用域提升)
 >      - 摇树：依赖ES6导入， 直把用到的方法放到 build中，没用到的 擦除，立即执行函数无法擦除，可以装`npm i purgecss-webpack-plugin -D` 擦除无效的css(要配置)
@@ -76,14 +75,21 @@
 >      - webpack 把公用的代码 单独提取成一个文件
 >    - sourceMap 优化
 >      - webpack 代码映射技术，通过映射可以追踪到源代码的报错
->
-> 4. ##### 用户优化
->
->    - 骨架屏
+> 
+>4. ##### 用户优化
+> 
+>   - 骨架屏
 >    - PWA
 >      - 首屏可以部署在服务端，响应式界面，沉浸式体验（在支持 PWA 的浏览器和手机应用上可以直接将 Web 应用添加到用户的主屏幕上）
 >    - 使用 缓存优化（客户端，服务端缓存）： 协商缓存，强制缓存。 服务端开启 gzip 压缩
->
+
+### 如何提升单页面(spa  single page app)应用首屏加载速度
+
+> 1. 减小入口文件
+> 2. 静态资源本地缓存
+> 3. 图片资源压缩，合并（精灵图）
+> 4. 开启 gzip 压缩包
+> 5. 使用服务器渲染
 
 ### Vue 初次渲染
 
@@ -111,8 +117,8 @@
 >
 > 使用场景：
 >
-> 	1.   计算 当进行计算，可以依赖缓存特性，避免每次都要计算
-> 	2.   当需要数据变化时 执行异步，或者 开销较大时，使用 watch , 限制执行该操作的频率，得到最终结果前，设置中间状态（防抖），计算属性不行
+> 1.   计算 当进行计算，可以依赖缓存特性，避免每次都要计算
+> 2.   当需要数据变化时 执行异步，或者 开销较大时，使用 watch , 限制执行该操作的频率，得到最终结果前，设置中间状态（防抖），计算属性不行
 
 ### watch只监听对象上的想监听属性，如何排除其他属性监听 
 
@@ -166,8 +172,6 @@ data() {
     // },
   },
 ```
-
-
 
 ### slot
 
@@ -284,8 +288,6 @@ console.log(this.$options.data());
 console.log(this.$data);
 ```
 
-
-
 ### LRU 缓存策略
 
 > 在内存中找出 最久没有使用的数据，换新数据 ， LRU 算法根据数据的历史记录进行淘汰，最常见的是一个链表保存数据缓存 ， 详细实现：
@@ -329,7 +331,7 @@ this.$delete( obj , name) // 对象
 
 > 是按照一定的策略进行 DOM的更新， 在更新是异步的，只要监听到数据变化，开启一个队列，缓存到事件循环中，发生的所有数据更改， 重复触发只放入一个队列，防止重复数据，避免不必要的计算，
 
-### 自定义指令
+### 自定义指令 directive
 
 > 1. 使用场景
 >    - 普通 DOM 元素进行底层操作，
@@ -363,9 +365,6 @@ this.$delete( obj , name) // 对象
 >
 >    - Vue.directive('自定义指令名', function( el, binding ) {})
 >
-> 5. 
->
->    
 
 ### 动态指令
 
@@ -384,8 +383,6 @@ mothods:{
     }
 }
 ```
-
-
 
 ### 子组件可以修改父组件的数据吗
 
@@ -450,7 +447,49 @@ mothods:{
 >    -  \$parent | \$refs | \$children
 > 3. 任意
 >    - eventBus 事件总线
+>    - .Observable 自定义一个小型的 vuex
 >    - Vuex
+
+### $attrs和$linsteners
+
+```js
+// 父组件 -》 子组件
+<DomeChilred
+      :dataName="dataName"
+      type="text"
+      v-on:updateDate="updateDate"
+/>
+  data() {
+    return {
+      dataName: "刘士朋",
+    };
+  },
+  methods: {
+    updateDate(val) {
+       // 接收 子孙组件的事件
+      this.dataName += val;
+    },
+  },      
+      
+      
+// 子组件 -》 孙组件
+<DomeSun v-bind="$attrs" v-on="$listeners" :dataName="dataName" />
+props: ["dataName"],
+    isShow() {
+      this.$listeners.updateDate("修改");
+    },
+        
+        
+// 孙子组件
+props: [ "dataName","type"],  // type -> text
+  methods: {
+    edit() {
+      this.$emit("updateDate", "帅");
+    },
+  },
+```
+
+
 
 ### 路由的 hash 和 history ，abstract-- 抽象模式 服务器的
 
@@ -587,3 +626,101 @@ edit: mutations.updata,
 > 4. 对象的组件声明方式
 >    - 生命方式改成了 类式的写法 setup()   和  ts 结合更容易
 > 5. 过滤器删除，可以用计算属性来代替
+
+### 处理错误（和警告）的更好方法
+
+```js
+// Vue 3
+const app = createApp(App);
+app.config.errorHandler = (err) => {
+  alert(err);
+};
+
+// Vue 2
+Vue.config.errorHandler = (err) => {
+  alert(err);
+};
+```
+
+### Es6
+
+> 1. 默认参数
+> 2. 剩余参数
+> 3. 箭头函数
+> 4. 字符串模板
+> 5. symbol
+
+### 前后端API交互如何保证数据安全性
+
+> 1. 使用https通讯
+> 2. 请求签名，防止参数被篡改
+> 3. 身份确认机制，每次请求都要验证合法
+> 4. app中使用 ssl , 防止抓包操作
+> 5. 对所有请求响应都加密
+
+### 避免重绘和回流 
+
+> 1. 操作DOM时，尽量在底层的DOM节点操作，
+> 2. 使用 Css表达式
+> 3. 不要频繁操作元素样式，直接修改类名，不要直接操作样式
+> 4. 频繁操作可以使用  documentFrament 文档碎片操作
+> 5. 也可以先把样式  display:none,  然后在显示
+> 6. 把多个操作放一起，浏览器的渲染队列会将操作放入队列 ，然后一个重回回流完成渲染
+
+### 常见浏览器兼容性问题
+
+> 1. *{margin:0;padding:0;}
+>
+> 1. 图片默认有间距   行内块 会有的 --》 float 或者 父元素 font-size:0 , 转成块元素
+>
+> 1. 边距重叠问题，两个相邻的都设置了 margin 边距  取最大值，使用 BFC 来清除
+>
+> 1. 火狐浏览器不能使用   innerText  可以使用 textContent 
+>
+> 1. 超链接访问后 hover 不显示 解决是 按顺序， L-V-H-A 来定义
+>
+> 1. 火狐不支持 cursor:hand,  使用pointer
+>
+> 2. 添加浏览器前缀 
+>
+>    - 谷歌，苹果 webkit
+>    - ie -ms-
+>    - 火狐 -moz-
+>    - 欧朋 -o-
+>
+> 3. 使用 hock 技术
+>
+>    ```css
+>    <!--[if gte IE 9]>  只有 ie9 可以检测到
+>     	<link rel="stylesheet" href="style9.css">
+>    <![endif]-->
+>    ```
+>    
+>    #### 移动端：
+>    
+>    1. ios点击事件300ms延迟，是移动端区分 点击和双击的。可以用 fastCilck,js 来执行。原理：加快事件的响应
+>    
+>    2. 底部输入框被键盘挡住问题， 判断浏览器高度，监听 resize 事件，判断 如果 宽度大于 当前， 就把input 输入框做定位处理，否则不变
+>    
+>    3. ios 弹出各种操作窗口    webkit-touch-callout:none
+>    
+>    4. 消除 transition 闪屏： 
+>    
+>       ```css
+>       webkit-transform-style: preserve-3d;     /*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/
+>       -webkit-backface-visibility: hidden;      /*(设置进行转换的元素的背面在面对用户时是否可见：隐藏)*/
+>       ```
+>    
+>    5. audio元素和video元素在无法自动播放 应对方案：触屏即播,  使用触屏播放 监听触屏，然后开始播放、
+>    
+>    6. fixed定位缺陷  
+>    
+>       1. ios下fixed元素定位容易出错，键盘弹出的时候影响 fixed 元素定位
+>       2. 安卓下 不会影响 fixed 元素定位。   
+>       3. 解决： 使用 iScroll插件解决。
+
+### 浏览器优化
+
+> 1. 图片加载
+> 2. 图片压缩 熊猫站
+> 3. requestAnimationFrame 在浏览器下次重绘前，继续更新下一帧动画
