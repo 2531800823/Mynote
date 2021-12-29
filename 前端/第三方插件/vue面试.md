@@ -89,7 +89,7 @@
 > 2. 静态资源本地缓存
 > 3. 图片资源压缩，合并（精灵图）
 > 4. 开启 gzip 压缩包
-> 5. 、使用服务器渲染
+> 5. 使用服务器渲染
 
 ### Vue 初次渲染
 
@@ -365,7 +365,6 @@ this.$delete( obj , name) // 对象
 >
 >    - Vue.directive('自定义指令名', function( el, binding ) {})
 >
-> 
 
 ### 动态指令
 
@@ -659,9 +658,28 @@ Vue.config.errorHandler = (err) => {
 > 4. app中使用 ssl , 防止抓包操作
 > 5. 对所有请求响应都加密
 
+### 避免重绘和回流 
+
+> 1. 操作DOM时，尽量在底层的DOM节点操作，
+> 2. 使用 Css表达式
+> 3. 不要频繁操作元素样式，直接修改类名，不要直接操作样式
+> 4. 频繁操作可以使用  documentFrament 文档碎片操作
+> 5. 也可以先把样式  display:none,  然后在显示
+> 6. 把多个操作放一起，浏览器的渲染队列会将操作放入队列 ，然后一个重回回流完成渲染
+
 ### 常见浏览器兼容性问题
 
 > 1. *{margin:0;padding:0;}
+>
+> 1. 图片默认有间距   行内块 会有的 --》 float 或者 父元素 font-size:0 , 转成块元素
+>
+> 1. 边距重叠问题，两个相邻的都设置了 margin 边距  取最大值，使用 BFC 来清除
+>
+> 1. 火狐浏览器不能使用   innerText  可以使用 textContent 
+>
+> 1. 超链接访问后 hover 不显示 解决是 按顺序， L-V-H-A 来定义
+>
+> 1. 火狐不支持 cursor:hand,  使用pointer
 >
 > 2. 添加浏览器前缀 
 >
@@ -677,5 +695,32 @@ Vue.config.errorHandler = (err) => {
 >     	<link rel="stylesheet" href="style9.css">
 >    <![endif]-->
 >    ```
->
 >    
+>    #### 移动端：
+>    
+>    1. ios点击事件300ms延迟，是移动端区分 点击和双击的。可以用 fastCilck,js 来执行。原理：加快事件的响应
+>    
+>    2. 底部输入框被键盘挡住问题， 判断浏览器高度，监听 resize 事件，判断 如果 宽度大于 当前， 就把input 输入框做定位处理，否则不变
+>    
+>    3. ios 弹出各种操作窗口    webkit-touch-callout:none
+>    
+>    4. 消除 transition 闪屏： 
+>    
+>       ```css
+>       webkit-transform-style: preserve-3d;     /*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/
+>       -webkit-backface-visibility: hidden;      /*(设置进行转换的元素的背面在面对用户时是否可见：隐藏)*/
+>       ```
+>    
+>    5. audio元素和video元素在无法自动播放 应对方案：触屏即播,  使用触屏播放 监听触屏，然后开始播放、
+>    
+>    6. fixed定位缺陷  
+>    
+>       1. ios下fixed元素定位容易出错，键盘弹出的时候影响 fixed 元素定位
+>       2. 安卓下 不会影响 fixed 元素定位。   
+>       3. 解决： 使用 iScroll插件解决。
+
+### 浏览器优化
+
+> 1. 图片加载
+> 2. 图片压缩 熊猫站
+> 3. requestAnimationFrame 在浏览器下次重绘前，继续更新下一帧动画
