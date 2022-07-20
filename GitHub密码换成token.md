@@ -37,7 +37,7 @@
 
 13. > 最近一次的令牌
     >
-    > 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   
+    > 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
     >
     > 
 
