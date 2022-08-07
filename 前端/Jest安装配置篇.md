@@ -1,12 +1,18 @@
 # Jest 安装配置
 
+## 生成可视化用例
+
+```shell
+ npm install -g istanbul
+```
+
 ## 安装
 
 ```shell
  # 安装依赖
  npm i -D jest
  #使用 ts 
- npm i @types/jest -D
+ npm i @types/jest ts-jest ts-node   -D
  npm i @babel/preset-typescript -D
 # 安装 Jest 后，用 jest-cli 初始化 jest 配置文件
 npx jest --init
@@ -61,7 +67,7 @@ npx jest --init
     "types": ["node", "jest"],
     "baseUrl": "./",
     "paths": {
-      "utils/*": ["src/utils/*"]，
+      "utils/*": ["src/utils/*"],
       "@/*": ["src/*"],
     }
   }
@@ -146,8 +152,55 @@ npm install -D jest-environment-jsdom-global jest-environment-jsdom
 配置文件
 
 ```ts
-"jest": {
+// jest.config.ts
+{
    testEnvironment: "jest-environment-jsdom-global",
 }
+```
+
+### React 写测试
+
+```shell
+# 转测试 hooks 的 @testing-library/react-hooks 
+npm i @testing-library/react-hooks @testing-library/react -D
+# 可以在 测试时 打印
+npm i jest-mock-console -D
+```
+
+```json
+// jest.config.js
+"jest": {
+    // ...
+    "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/src/$1",
+        // "\\.(css|less)$": "identity-obj-proxy", 
+        "\\.(css|less)$": "<rootDir>/common/__tests__/null.ts", 
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/common/__tests__/setupTests.ts",
+    ]
+}
+```
+
+```shell
+#  处理 css module,css in js 
+npm i identity-obj-proxy -D
+#jest-dom 的 类型
+npm i @types/testing-library__jest-dom -D
+```
+
+```js
+// 全局文件中配置 在 jest.config.ts setupFilesAfterEnv 声明   setupFilesAfterEnv: ['./setupTest.ts'],
+import '@testing-library/react';
+import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/extend-expect';
+// 可以模拟更真实的 dom 交互
+import '@testing-library/user-event';
+```
+
+```json
+// ts 配置 
+"types": ["node","jest","@testing-library/jest-dom"],
+
 ```
 
