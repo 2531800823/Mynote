@@ -2,6 +2,12 @@
 
 
 
+### 镜像源
+
+> ```
+> https://registry.npmjs.org/
+> ```
+
 ### 设置命令启动
 
 ```shell
@@ -26,4 +32,42 @@ pnpm config set shamefully-hoist true
 
 
 
-@emotion/react , umi , Ant Design Mobile , react, ts，postcss-px-to-viewport ， Swiper
+## 远程操作
+
+### 登录
+
+npm login 
+
+### 发布
+
+npm publish
+
+
+
+
+
+## 配置
+
+```js
+{
+  "config": {
+    "port": "8080"
+  },
+  // 生产
+  "dependencies": {
+    "package-1": "^3.1.4"
+  },
+      // devDependencies 开发依赖，
+      // peerDependencies 使用本模板要装的包
+      // optionalDependencies 可选的依赖项可以与包一起使用，但不是必需的
+      
+}
+```
+
+
+
+
+
+## 让全局包 只用项目 node_modules 里面的包
+
+### import-local
