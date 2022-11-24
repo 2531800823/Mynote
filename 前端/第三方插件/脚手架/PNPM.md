@@ -49,7 +49,6 @@ pnpm exec jest
 // --recursive, -r 递归 例如：
 pnpm -r exec rm -rf node_modules
 // --filter  过滤包 
-
 ```
 
 ## 开启 workspace , monorepo

@@ -32,6 +32,18 @@ pnpm config set shamefully-hoist true
 
 
 
+### version
+
+```shell
+npm version patch # 小版本号+1  -> 0.0.1
+npm version preminor # 中版本号+1 -> 0.1.0
+npm version premajor # 大版本号+1 -> 1.0.0
+...
+npm version patch -m '描述信息'
+```
+
+
+
 ## 远程操作
 
 ### 登录
@@ -41,6 +53,10 @@ npm login
 ### 发布
 
 npm publish
+
+
+
+### 发布包插件  np模块
 
 
 
@@ -68,6 +84,3 @@ npm publish
 
 
 
-## 让全局包 只用项目 node_modules 里面的包
-
-### import-local
