@@ -96,7 +96,7 @@ module.exports = {
 ### 添加 package.json 执行命令
 
 ```shell
- "scripts": 
+"scripts": {
     "release": "standard-version",
     "lint": "pnpm lint:script && pnpm stylelint",
     "lint:script": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
@@ -146,10 +146,16 @@ pnpm add husky -D
 ### 添加 hooks
 
 ```shell
-npx husky add .husky/pre-commit "npm test"   #添加 git hooks ，在提交前执行 npm test
+npx husky install && npx husky add .husky/pre-commit "npx lint-staged"   #先初始化 添加 git hooks ，在提交前执行 npm test
 ```
 
 ## lint-staged 用来操作 git 暂存区，解决上面执行 全局的代码
+
+### 安装 lint-staged
+
+```shell
+pnpm add lint-staged -D
+```
 
 > .lintstagedrc 添加 执行文件
 
@@ -161,12 +167,12 @@ npx husky add .husky/pre-commit "npm test"   #添加 git hooks ，在提交前�
 ```
 
 ```shell
-npx husky add .husky/commit-msg "npm test"  # 添加 hooks ，在提交的时候校验msg信息
+npx husky add .husky/commit-msg "npx  commitlint --edit "${1}""  # 添加 hooks ，在提交的时候校验msg信息
 ```
 
 ## pnpm add commitlint -D 来约束 git 提交 msg 校验
 
-> .commitlintrc 创建一个配置文件 @commitlint/config-conventional 安装来自定义修改
+> .commitlintrc.json 创建一个配置文件 @commitlint/config-conventional 安装来自定义修改
 
 ```json
 ///.commitlintrc
@@ -185,7 +191,7 @@ npx husky add .husky/commit-msg "npm test"  # 添加 hooks ，在提交的时候
   }
 ```
 
-> .versionrc.js  添加配置文件
+> .versionrc.js  添加配置文件  不想用可以不添加
 
 ```js
 module.exports = {
@@ -206,9 +212,6 @@ module.exports = {
     { type: 'ci', section: '👷 Continuous Integration | CI 部署' }
   ]
 }
-
-
-
 ```
 
 ## 格式化 css stylelint 继续使用 umi 模块

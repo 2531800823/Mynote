@@ -29,13 +29,6 @@ program.addHelpText("beforeAll", "请阅读下面的命令！！！");
 // 参数2 函数，返回一个字符串， 
 // error：boolean 值，代表该帮助信息是否由于不当使用而展示
 // command：代表展示该帮助信息的Command对象
-
-// 没有命令的时候 输出帮助文档
-if (process.argv.length < 3) {
-    program.outputHelp();
-} else {
-    program.parse(process.argv);
-}
 ```
 
 ## 在出错后展示帮助信息
@@ -46,21 +39,6 @@ program.showHelpAfterError('出错了哦');
 
 // 遇到未知命令和拼写错误后，建议正确拼写
 program.showSuggestionAfterError(true);
-
-// 处理错误
-program.showHelpAfterError(colors.yellow('(使用 --help 查看帮助文档)'));
-program.exitOverride();
-try {
-    program.parse(process.argv);
-} catch (e) {
-    console.log();
-    const obj = program.args;
-    console.error(colors.red('出错了！未知的命令：', obj[0]));
-    const commands = program.commands.map((cmd) => cmd.name());
-    if (commands.lengtn > 0) {
-        console.log(colors.green('可用命令：', commands.join(', ')));
-    }
-}
 ```
 
 ## 添加自己的 option    [官网文档](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md#%e9%80%89%e9%a1%b9)
@@ -106,13 +84,6 @@ else {
 program.on('--help', function () {
   console.log('监听到了');
 })
-// 监听所有的 未知 命令, 会把命令放入到 参数里
-program.on('command:*', function (obj) {
-  	console.log('监听到了',obj);
-    console.error('未知的命令：', obj[0])
-    const commands = program.commands.map(cmd=>cmd.name())
-    console.log('可用命令：',commands.join(', '))
-})
 ```
 
 ## 自定义指令
@@ -124,8 +95,6 @@ program.on('command:*', function (obj) {
 // [others...]  <fileName...> 多个可选参数
 // 配置对象： noHelp： 不显示在 帮助文档
 //   		isDefault: 没有其他命令，默认执行这个命令
-//          executableFile: 可以手动修改可执行文件 可以使用别的脚手架
-			// 例：.command("install ", { executableFile: '../cli' }) 要拼接路径到其他的脚手架命令（或者其他js文件，也会调用） 就可以执行别的脚手架命令 也可以相对路径
 program
   .command("create <fileName> [others...]", { noHelp: true })
   .description("这里是描述！！")
@@ -141,28 +110,11 @@ program
     }
   });
 // .description 描述信息
-// .alias('i') 添加别名
 // .option 可以为指令添加参数 如: liu create -p 8080
 // .action 处理指令参数， 传入一个函数，函数接收 的是指令传入的参数，最后一个参数 指向该命令自身
-// .argument('<first>', 'integer argument', 1000) 可以匹配所有命令，可以单独把参数提出来配置 	.argument('[second]', 'integer argument', 1000, 2000) 在description 第二参数可以用 {first:'第一个'} 来描述 命令
+// .argument('<first>', 'integer argument', 1000) 可以单独把参数提出来配置 	.argument('[second]', 'integer argument', 1000, 2000)
 // .name('create')  单独把 name 提出来配置
 
 
-```
-
-## 添加子命令
-
-```js
-const service = new commander.Command('service');
-service.command('start [port]')
-.description('在 service 下创建的子命令')
-.action((port)=>{
-    console.log('执行命令',port)
-})
-
-// 注册到全局
-program.addCommand(service)
-// cli service -h  // 显示的就只有 service 创建的命令
-// cli service start 8888 --> '执行命令',8888
 ```
 

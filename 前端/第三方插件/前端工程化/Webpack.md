@@ -229,14 +229,6 @@ optimization: {
   },
 ```
 
-#### hmr 手动处理 hmr 热更新，
-
-> 在加载模块文件下 添加，可以处理一些特殊的 js 图片... 文件
->
-> module.hot.accept('文件路径',()=>{处理函数})
->
-> ! 如果使用了 自定义，就不会再 通过 hrm自动管理该文件
-
 
 
 ### 性能提示 [Performance](https://webpack.docschina.org/configuration/performance/)
