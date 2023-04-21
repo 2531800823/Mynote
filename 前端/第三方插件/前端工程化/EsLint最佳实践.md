@@ -2,6 +2,12 @@
 
 ## 直接使用 umijs 配置好的 @umijs/fabric
 
+```shell
+pnpm add eslint @umijs/fabric @babel/plugin-proposal-decorators -D
+```
+
+
+
 > .eslintrc.js 文件配置
 
 ```js
@@ -93,6 +99,39 @@ module.exports = {
 
 ```
 
+
+
+```js
+// .prettierrc.js
+const fabric = require('@umijs/fabric');
+
+module.exports = {
+  ...fabric.prettier,
+
+  singleQuote: true,
+  trailingComma: 'all',
+  printWidth: 120,
+  overrides: [
+    {
+      files: '.prettierrc',
+      options: {
+        parser: 'json',
+      },
+    },
+    {
+      files: ['*.md'],
+      options: {
+        embeddedLanguageFormatting: 'off',
+      },
+    },
+  ],
+
+};
+
+```
+
+
+
 ### 添加 package.json 执行命令
 
 ```shell
@@ -111,7 +150,7 @@ module.exports = {
 ```json
 {
   "editor.formatOnSave": true,
-  "prettier.enable": true,
+  "prettier.enable": false,  // 关闭这个要重启一下
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
     "source.fixAll.stylelint": true
@@ -170,7 +209,11 @@ pnpm add lint-staged -D
 npx husky add .husky/commit-msg "npx  commitlint --edit "${1}""  # 添加 hooks ，在提交的时候校验msg信息
 ```
 
-## pnpm add commitlint -D 来约束 git 提交 msg 校验
+## 来约束 git 提交 msg 校验
+
+```shell
+pnpm add @commitlint/config-conventional @commitlint/cli -D 
+```
 
 > .commitlintrc.json 创建一个配置文件 @commitlint/config-conventional 安装来自定义修改
 
@@ -187,7 +230,7 @@ npx husky add .husky/commit-msg "npx  commitlint --edit "${1}""  # 添加 hooks 
 
 ```json
   "scripts": {
-    "release": "standard-version"
+    "release": "standard-version --release-as patch", // 提交小版本
   }
 ```
 
@@ -218,6 +261,12 @@ module.exports = {
 
 ### 安装 stylelint-config-recess-order 对 css 来进行排序
 
+```shell
+pnpm add stylelint-config-recess-order -D
+```
+
+
+
 > . stylelintrc.js 创建
 
 ```js
@@ -238,6 +287,19 @@ module.exports = {
   // ]
 };
 
+```
+
+### 使用 postcss 兼容浏览器版本
+
+```json
+ "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "IE 11",
+    "not IE 10"
+  ]
 ```
 
 

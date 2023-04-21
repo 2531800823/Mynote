@@ -49,7 +49,9 @@ pnpm exec jest
 // --recursive, -r 递归 例如：
 pnpm -r exec rm -rf node_modules
 // --filter  过滤包 
-
+pnpm --filter main  start 
+// 全部命令
+pnpm run --filter * dev
 ```
 
 ## 开启 workspace , monorepo
@@ -68,6 +70,8 @@ packages:
 ```js
 // 安装根目录的开发依赖
 pnpm add -Dw axios
+
+pnpm add axios -D --filter main
 ```
 
 ### 查看依赖
